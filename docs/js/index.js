@@ -7,3 +7,7 @@ if ('addEventListener' in document) {
     FastClick.attach(document.body);
   }, false);
 }
+
+var renderStone = new renderli(2, ".ob-list"); // 渲染石头
+
+renderStone.run();
