@@ -31,3 +31,16 @@ UI方面我想用中国画水墨风格。原因是自己有国画功底，想尝
 
 
 这个想法，想想就十分激动。好了，马上开工。
+
+花了三个小时找素材整理素材和画UI，画好了大概是下面这个样子：
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/UI/game1.png)
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/UI/game2.png)
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/UI/game3.png)
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/UI/game4.png)
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/UI/game5.png)
+
