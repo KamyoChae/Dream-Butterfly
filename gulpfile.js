@@ -38,17 +38,17 @@ gulp.task("css",function(){
 })
 
 gulp.task("images",function(){
-    gulp.src(folder.src+"images/*") // 读取src/images文件夹下面的所有文件
+    gulp.src(folder.src+"images/lib/*") // 读取src/images文件夹下面的所有文件
     .pipe(imagemin())               // 图片压缩
-    .pipe(gulp.dest(folder.dist+"images/")) // 输出代码到dist/images目录下面
+    .pipe(gulp.dest(folder.dist+"images/lib/")) // 输出代码到dist/images目录下面
 })
 gulp.task("js",function(){
     gulp.src(folder.src + "js/*")       // 读取src/js文件夹下面的所有文件
     .pipe(babel({
         "presets":['@babel/env']
     }))                               // 使用babel
-    .pipe(uglify())                     // js代码压缩
-    .pipe(stripDebug())                 // 去除全部调试语句
+    // .pipe(uglify())                     // js代码压缩
+    // .pipe(stripDebug())                 // 去除全部调试语句
     .pipe(gulp.dest(folder.dist+"js/")) // 输出代码到dist/js目录下面
 })
 
@@ -65,6 +65,7 @@ gulp.task("watch",function(){
     gulp.watch("src/html/*",["html"])   
     gulp.watch("src/css/*",["css"])
     gulp.watch("src/js/*",["js"])
+    gulp.watch("src/images/*",["images"])
 })
 
 gulp.task("default", ["html", "images", "css", "server", "js", "watch"])
