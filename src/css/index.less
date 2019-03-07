@@ -3,17 +3,21 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
-
+@sizeinit : {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}  
 .wrapper{
+    position: relative;
     width: 100vw;
     height: 100vh;
     background:#f5f5f5;
     overflow: hidden;
     .index{
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-        position: relative;
+        z-index: 10;
+        @sizeinit();
+        position: absolute;
         .title{
             width: 50%;
             height: 0; 
@@ -30,7 +34,7 @@
                 display: block;
                 width: 30%; 
                 height: 0;
-                padding-bottom: 10%;
+                padding-bottom: 12%;
                 background-image: url(../images/lib/startbtn.png);
                 @background(); 
                 margin: 1em auto;
@@ -39,7 +43,155 @@
                 background-image: url(../images/lib/worldbtn.png);
             }
         }
+        .bg{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 0;
+            padding-bottom: 75%;
+            background-image: url(../images/lib/bg.png);
+            @background(); 
+        }
+        .sound{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 15vh;  
+
+            label, .checked, .ischecked::after{
+                position: absolute;
+                height: 0; 
+                @background();
+            }
+            label, .checked{ 
+                bottom: 8vh;  
+                padding-bottom: 5%;
+            }
+            label{ 
+                right: 20vw;
+                width: 10vw; 
+                background-image: url(../images/lib/sound.png); 
+            }
+            .checked{ 
+                right: 10vw;
+                width: 5vw; 
+                background-image: url(../images/lib/sound-box.png); 
+            }
+            .ischecked::after{
+                content: ""; 
+                left: 0;
+                bottom: 0;
+                width: 10vw; 
+                padding-bottom: 170%;
+                background-image: url(../images/lib/sound-check.png); 
+            }
+        }
+
     }
 
+} 
+.wrapper{
+    .start{ 
+        z-index: 20;
+        @sizeinit();
+        position: absolute;
+        background: #f5f5f5;
+        .header{
+            position: absolute;
+            z-index: 25;
+            padding: 1em 0;
+            width: 100%;
+            height: 7vh;
+            line-height: 5vh; 
+            display: flex; 
+            .score, .livebox, .puase{
+                flex: 1; 
+            }
+            .score{
+                box-sizing: border-box; 
+                text-align: right;
+                color: #494242;
+                font-size: 5vw;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .seconds{
+                    font-size: .5em;
+                    line-height: 1em;
+                }
+            }
+            .livebox{ 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span.live{
+                    width: 5vw;
+                    height: 0;
+                    padding-bottom: 5vw;
+                    background-image: url(../images/lib/live.png);
+                    @background();
+                    margin: 2px;
+                }
+            }
+            .puase{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .pupl{
+                    display: block;
+                    width: 18vw;
+                    height: 0;
+                    padding-bottom: 9vw;
+                    background-image: url(../images/lib/play.png);
+                    @background();
+                }
+            }
+        }
+        .bodyer{
+            @sizeinit(); 
+            background: #ff55ff;
+            .obstacle{
+                
+                width: 100%;
+                height: 100%;
+                background: #494242;
+            }
+        }
+        .footer{
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 10vh; 
+            .butterfly{ 
+                position: relative;
+                width: 8vh;
+                height: 8vh; 
+                transform: perspective(600px);
+                span{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url(../images/lib/u2.png) ;
+                    @background();
+                }
+                .fly{ 
+                    animation: flying infinite .5s forwards;
+                   
+                }
+                @keyframes flying {
+                    0%{
+                        transform: rotateY(0)
+                    }
+                    50%{
+                        transform: rotateY(80deg)
+                    }
+                     
+                }
+                
+            }
+        }
+    }
 }
-.title{}
