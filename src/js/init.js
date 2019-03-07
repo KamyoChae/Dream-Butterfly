@@ -11,4 +11,5 @@
         let renderStone = new renderli(2, ".ob-list") // 渲染石头
         renderStone.run()
     }
+
 })()

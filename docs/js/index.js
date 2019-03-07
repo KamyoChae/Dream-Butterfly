@@ -16,18 +16,69 @@ function () {
   _createClass(StartGame, [{
     key: "clickStart",
     value: function clickStart() {
+      console.log(666);
       var start = document.querySelector(".startbtn");
-      var win_index = document.querySelector('.index');
-      var win_start = document.querySelector('.start');
+      var that = this;
       start.addEventListener('click', function () {
-        win_index.style.zIndex = "-999";
-        win_start.style.zIndex = "999";
+        history.pushState({
+          from: "index",
+          to: "start"
+        }, null, "?start");
+        that.showWindow("start");
       });
+      window.addEventListener("popstate", function (e) {
+        if (e.state) {
+          var from = e.state.from;
+          var to = e.state.to;
+          console.log("from: " + from);
+          console.log("to: " + to);
+          history.pushState({
+            from: to,
+            to: from
+          }, null, "?" + from);
+          that.showWindow(from);
+        }
+      });
+    }
+  }, {
+    key: "clickWorld",
+    value: function clickWorld() {
+      console.log(98989);
+      var start = document.querySelector(".worldbtn");
+      var that = this;
+      start.addEventListener('click', function () {
+        history.pushState({
+          from: "index",
+          to: "world"
+        }, null, "?world");
+        that.showWindow("world");
+      });
+    }
+  }, {
+    key: "showWindow",
+    value: function showWindow(name) {
+      var obj = {
+        index: document.querySelector('.index'),
+        start: document.querySelector('.start'),
+        error: document.querySelector('.error'),
+        help: document.querySelector('.help'),
+        world: document.querySelector('.world')
+      };
+
+      for (var prop in obj) {
+        // if(obj[prop]){}
+        if (name == prop) {
+          obj[prop].style.zIndex = "999";
+        } else {
+          obj[prop].style.zIndex = "-999";
+        }
+      }
     }
   }, {
     key: "run",
     value: function run() {
       this.clickStart();
+      this.clickWorld();
     }
   }]);
 
