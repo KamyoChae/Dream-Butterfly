@@ -5,11 +5,7 @@ class renderli {
         this.target = target
     }
     getStoneNum(){
-        return  this.rowStoneNum
- 
-        let dom = this.randomJpg(stoneNum) 
-        console.log(dom) 
-        // this.insertOb(dom)
+        return  Math.floor(Math.random() * this.rowStoneNum + 1)
         
     }
     getLiDomDiv(stoneNum){
@@ -31,20 +27,18 @@ class renderli {
         return this.toElement(nullDomArr.join("")) 
     }
     toElement(strDom){
+        // 踩了一个大坑，写完项目着重做下总结
         let li = document.createElement('li'); 
         li.innerHTML = strDom; 
         return li
     }
     insertToOb(dom){
-        let ul = document.querySelector(this.target) 
-        console.log(ul)
+        let ul = document.querySelector(this.target)  
         ul.insertBefore(dom, ul.firstChild)
     }
     run(){
-        let num = this.getStoneNum()
-        console.log(num)
-        let liDiv = this.getLiDomDiv(num)
-        console.log(liDiv)
+        let num = this.getStoneNum() 
+        let liDiv = this.getLiDomDiv(num) 
         this.insertToOb(liDiv)
     }
   

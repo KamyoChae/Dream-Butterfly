@@ -1,11 +1,16 @@
- 
-
-let $ = window.zepto
-if ('addEventListener' in document) {
-	document.addEventListener('DOMContentLoaded', function() {
-		FastClick.attach(document.body);
-	}, false);
+class StartGame{
+    clickStart(){
+        let start = document.querySelector(".startbtn")
+        let win_index = document.querySelector('.index')
+        let win_start = document.querySelector('.start')
+        start.addEventListener('click',()=>{
+            win_index.style.zIndex = "-999"
+            win_start.style.zIndex = "999"
+        })
+    }
+    run(){
+        this.clickStart()
+    }
 }
 
-let renderStone = new renderli(2, ".ob-list") // 渲染石头
-renderStone.run()
+new StartGame().run()

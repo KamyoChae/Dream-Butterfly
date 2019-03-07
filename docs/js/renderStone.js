@@ -20,9 +20,7 @@ function () {
   _createClass(renderli, [{
     key: "getStoneNum",
     value: function getStoneNum() {
-      return this.rowStoneNum;
-      var dom = this.randomJpg(stoneNum);
-      console.log(dom); // this.insertOb(dom)
+      return Math.floor(Math.random() * this.rowStoneNum + 1);
     }
   }, {
     key: "getLiDomDiv",
@@ -49,6 +47,7 @@ function () {
   }, {
     key: "toElement",
     value: function toElement(strDom) {
+      // 踩了一个大坑，写完项目着重做下总结
       var li = document.createElement('li');
       li.innerHTML = strDom;
       return li;
@@ -57,16 +56,13 @@ function () {
     key: "insertToOb",
     value: function insertToOb(dom) {
       var ul = document.querySelector(this.target);
-      console.log(ul);
       ul.insertBefore(dom, ul.firstChild);
     }
   }, {
     key: "run",
     value: function run() {
       var num = this.getStoneNum();
-      console.log(num);
       var liDiv = this.getLiDomDiv(num);
-      console.log(liDiv);
       this.insertToOb(liDiv);
     }
   }]);
