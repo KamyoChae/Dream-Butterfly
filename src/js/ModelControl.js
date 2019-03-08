@@ -16,6 +16,11 @@ class ModelControl {
 
         this.liHeight = document.querySelector(".ob-list li").offsetHeight // 每个li 的高度 66  
         this.animateDown = ""
+
+        this.clientWidth = document.body.clientWidth
+        this.clientHeight = document.body.clientHeight
+        this.aa = "帅"
+
     }
     run() {
         this.createInterval(this.num, this.dom)
@@ -56,8 +61,8 @@ class ModelControl {
         let scoreTimer = setInterval(() => {
 
             score = score + Math.ceil(1 * Math.random())
-            
-            this.score = score 
+
+            this.score = score
         }, 100)
 
         let secTimer = setInterval(() => {
@@ -75,21 +80,20 @@ class ModelControl {
             dom.innerHTML = `${score}
             <div class="seconds">${timeSec}</div>`
             this.u = u,
-            this.strU = strU,
-            this.seconds = seconds,
-            this.timeSec = timeSec
+                this.strU = strU,
+                this.seconds = seconds,
+                this.timeSec = timeSec
         }, 10);
 
         this.secTimer = secTimer
-        this.scoreTimer = scoreTimer 
- 
- 
+        this.scoreTimer = scoreTimer
+
+
     }
 
     cancleTimer() {
-
         clearInterval(this.scoreTimer)
-        clearInterval(this.secTimer) 
+        clearInterval(this.secTimer)
         window.cancelAnimationFrame(this.animateDown)
 
     }
@@ -113,41 +117,100 @@ class ModelControl {
             }
 
         })
-        
+
     }
 
-    pullDown(){
+    pullDown() {
         cancelAnimationFrame(this.animateDown)
         console.log(this.liHeight)
         let that = this
-        let dow = ()=>{
-             
-            let liHeight = document.querySelector(".ob-list li").offsetHeight // 每个li 的高度 66 
-            let obList = document.querySelector(".ob-list") // 滚动画板  
-            if(obList){
+        let obList = document.querySelector(".ob-list") // 滚动画板  
+        let dow = () => {
+
+            if (obList) {
                 let obOffsetTOp = obList.offsetTop // 滚动画板左上角与定位的父级左上角的距离 -667
-                let newSet = obOffsetTOp + 2 
+                let newSet = obOffsetTOp + 10
                 obList.style.top = newSet + "px" // 开始下滑 
 
-                if(obOffsetTOp>=that.liHeight){
+                if (obOffsetTOp >= that.liHeight) {
                     // 表示滑动到了最下面 多一个 移除最下面的节点 重新添加一个节点
                     let len = obList.childNodes.length
-                    let lastChild = obList.childNodes[len-1]
+                    let lastChild = obList.childNodes[len - 1]
                     obList.removeChild(lastChild)
                     obList.style.top = 0 + "px" // 开始下滑 
 
                     // 插入新节点
                     new Renderli(2, ".ob-list").run() // 渲染石头  
                 }
-                // 不断进行移动
 
             }
-            
-           this.animateDown = window.requestAnimationFrame(dow) 
-            
+            this.checked()
+            this.animateDown = window.requestAnimationFrame(dow)
+
         }
         // this.down = down
-        dow()  
+        dow()
+    }
+    collision(ele) {
+        let butfLeft = document.querySelector(".footer")
+        let rect1 = {}
+        let rect2 = {}
+        rect1.x = butfLeft.offsetLeft,
+        rect1.y = butfLeft.offsetTop,
+        rect1.height = butfLeft.offsetHeight,
+        rect1.width = butfLeft.offsetHeight,
+        rect2.x = ele.offsetLeft,
+        rect2.y = ele.offsetTop,
+        rect2.width = ele.offsetHeight
+        rect2.height = ele.offsetHeight
+
+        // console.log(butfLeft.offsetTop) 
+
+        // rect1.x < rect2.x + rect2.width &&
+        // rect1.x + rect1.width > rect2.x &&
+        // rect1.y < rect2.y + rect2.height &&
+        // rect1.height + rect1.y > rect2.y
+
+        // 方便 查看 数据
+        // console.log(rect1.x, rect2.x, rect2.width,
+        //     rect1.width,
+        //     rect1.y, rect2.y, rect2.height,
+        //     rect1.height)
+
+        if (rect1.x < rect2.x + rect2.width &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y < rect2.y + rect2.height &&
+            rect1.height + rect1.y > rect2.y) {
+
+            console.log("碰撞", this.animateDown)
+            cancelAnimationFrame(this.animateDown) 
+        }  
+    }
+    checked() {
+        let that = this
+        let domList = Array.from(document.querySelectorAll(".stone")) // 含70个元素的dom数组
+        let newDom = []
+        domList.forEach((ele) => {
+            if (ele.style.backgroundImage !== "") {
+                newDom.push(ele)
+            }
+        })
+        // 遍历 石头 
+
+        // 
+        /**
+         * 如果石头左上角距离顶部条件: 
+         * 石头offsetTop >= (9/10 * 高度) + 石头高度/3 
+         * 并且 
+         * 如果 蝴蝶 offsetLeft >= 石头offsetLeft + 石头宽度/2 并且 蝴蝶offsetLeft < 石头offsetLeft + 石头宽度（蝴蝶在右边）
+         *      表示碰撞
+         * 如果 蝴蝶 offsetLeft <= 石头offset 并且 石头offset-石头宽度 < 蝴蝶offset （蝴蝶在左边）
+         *      表示碰撞
+         * 
+         */
+        newDom.forEach((ele) => {
+            that.collision(ele)
+        })
     }
 
 }

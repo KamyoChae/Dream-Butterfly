@@ -27,6 +27,9 @@ function () {
     this.liHeight = document.querySelector(".ob-list li").offsetHeight; // 每个li 的高度 66  
 
     this.animateDown = "";
+    this.clientWidth = document.body.clientWidth;
+    this.clientHeight = document.body.clientHeight;
+    this.aa = "帅";
   }
 
   _createClass(ModelControl, [{
@@ -142,16 +145,13 @@ function () {
       cancelAnimationFrame(this.animateDown);
       console.log(this.liHeight);
       var that = this;
+      var obList = document.querySelector(".ob-list"); // 滚动画板  
 
       var dow = function dow() {
-        var liHeight = document.querySelector(".ob-list li").offsetHeight; // 每个li 的高度 66 
-
-        var obList = document.querySelector(".ob-list"); // 滚动画板  
-
         if (obList) {
           var obOffsetTOp = obList.offsetTop; // 滚动画板左上角与定位的父级左上角的距离 -667
 
-          var newSet = obOffsetTOp + 2;
+          var newSet = obOffsetTOp + 10;
           obList.style.top = newSet + "px"; // 开始下滑 
 
           if (obOffsetTOp >= that.liHeight) {
@@ -163,15 +163,68 @@ function () {
             // 插入新节点
 
             new Renderli(2, ".ob-list").run(); // 渲染石头  
-          } // 不断进行移动
-
+          }
         }
+
+        _this4.checked();
 
         _this4.animateDown = window.requestAnimationFrame(dow);
       }; // this.down = down
 
 
       dow();
+    }
+  }, {
+    key: "collision",
+    value: function collision(ele) {
+      var butfLeft = document.querySelector(".footer");
+      var rect1 = {};
+      var rect2 = {};
+      rect1.x = butfLeft.offsetLeft, rect1.y = butfLeft.offsetTop, rect1.height = butfLeft.offsetHeight, rect1.width = butfLeft.offsetHeight, rect2.x = ele.offsetLeft, rect2.y = ele.offsetTop, rect2.width = ele.offsetHeight;
+      rect2.height = ele.offsetHeight; // console.log(butfLeft.offsetTop) 
+      // rect1.x < rect2.x + rect2.width &&
+      // rect1.x + rect1.width > rect2.x &&
+      // rect1.y < rect2.y + rect2.height &&
+      // rect1.height + rect1.y > rect2.y
+      // 方便 查看 数据
+      // console.log(rect1.x, rect2.x, rect2.width,
+      //     rect1.width,
+      //     rect1.y, rect2.y, rect2.height,
+      //     rect1.height)
+
+      if (rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.height + rect1.y > rect2.y) {
+        console.log("碰撞", this.animateDown);
+        cancelAnimationFrame(this.animateDown);
+      }
+    }
+  }, {
+    key: "checked",
+    value: function checked() {
+      var that = this;
+      var domList = Array.from(document.querySelectorAll(".stone")); // 含70个元素的dom数组
+
+      var newDom = [];
+      domList.forEach(function (ele) {
+        if (ele.style.backgroundImage !== "") {
+          newDom.push(ele);
+        }
+      }); // 遍历 石头 
+      // 
+
+      /**
+       * 如果石头左上角距离顶部条件: 
+       * 石头offsetTop >= (9/10 * 高度) + 石头高度/3 
+       * 并且 
+       * 如果 蝴蝶 offsetLeft >= 石头offsetLeft + 石头宽度/2 并且 蝴蝶offsetLeft < 石头offsetLeft + 石头宽度（蝴蝶在右边）
+       *      表示碰撞
+       * 如果 蝴蝶 offsetLeft <= 石头offset 并且 石头offset-石头宽度 < 蝴蝶offset （蝴蝶在左边）
+       *      表示碰撞
+       * 
+       */
+
+      newDom.forEach(function (ele) {
+        that.collision(ele);
+      });
     }
   }]);
 
