@@ -17,7 +17,6 @@ function () {
     key: "clickStart",
     // 用于控制首页启动页面
     value: function clickStart() {
-      console.log(666);
       var start = document.querySelector(".startbtn");
       var that = this;
       start.addEventListener('click', function () {
@@ -45,7 +44,6 @@ function () {
   }, {
     key: "clickWorld",
     value: function clickWorld() {
-      console.log(98989);
       var start = document.querySelector(".worldbtn");
       var that = this;
       start.addEventListener('click', function () {

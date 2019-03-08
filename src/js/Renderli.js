@@ -34,7 +34,7 @@ class Renderli {
     }
     insertToOb(dom){
         let ul = document.querySelector(this.target)  
-        ul.insertBefore(dom, ul.firstChild)
+        ul.insertBefore(dom, ul.firstChild) 
     }
     run(){
         let num = this.getStoneNum() 

@@ -1,8 +1,7 @@
 class InfoStart{
     // 用于控制首页启动页面
     clickStart(){
-        
-        console.log(666) 
+         
         let start = document.querySelector(".startbtn")
         let that = this 
         start.addEventListener('click',()=>{
@@ -22,8 +21,7 @@ class InfoStart{
         })
         
     }
-    clickWorld(){
-        console.log(98989)
+    clickWorld(){ 
         let start = document.querySelector(".worldbtn")
         let that = this 
         start.addEventListener('click',()=>{
