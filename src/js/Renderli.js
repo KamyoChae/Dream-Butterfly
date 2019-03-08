@@ -1,4 +1,4 @@
-class renderli {
+class Renderli {
     // 接收一个难度参数，决定一行创建多少个石头 0/1/2
     constructor(num, target){
         this.rowStoneNum = num

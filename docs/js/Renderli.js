@@ -6,18 +6,18 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var renderli =
+var Renderli =
 /*#__PURE__*/
 function () {
   // 接收一个难度参数，决定一行创建多少个石头 0/1/2
-  function renderli(num, target) {
-    _classCallCheck(this, renderli);
+  function Renderli(num, target) {
+    _classCallCheck(this, Renderli);
 
     this.rowStoneNum = num;
     this.target = target;
   }
 
-  _createClass(renderli, [{
+  _createClass(Renderli, [{
     key: "getStoneNum",
     value: function getStoneNum() {
       return Math.floor(Math.random() * this.rowStoneNum + 1);
@@ -67,5 +67,5 @@ function () {
     }
   }]);
 
-  return renderli;
+  return Renderli;
 }();

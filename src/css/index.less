@@ -94,10 +94,10 @@
 
 } 
 .wrapper{
-    .start{ 
+    .start{   
+        position: absolute;
         z-index: -99;
         @sizeinit();
-        position: absolute;
         background: #f5f5f5;
         .header{
             position: absolute;
@@ -148,6 +148,9 @@
                     padding-bottom: 9vw;
                     background-image: url(../images/lib/play.png);
                     @background();
+                }
+                .play{
+                    background-image: url(../images/lib/pause.png);
                 }
             }
         }
@@ -213,6 +216,43 @@
                 }
                 
             }
+        }
+        .model{ 
+            display: none;
+            position: absolute;
+            width: 70vw;
+            height: calc(70vw / 2); 
+            background-image: url(../images/lib/overbox.png);
+            @background(); 
+            left: 50vw;
+            top: 50vh;
+            transform: translate(-50%, -80%);
+            animation: shink 1s ease-in infinite;
+            text-align: center;
+            vertical-align: middle; 
+            span{
+                line-height: calc(70vw / 2);
+                font-size: 4em;
+                animation: shinkspan 1s infinite ease-in; 
+                opacity: 0;
+                color: #494242;
+            }
+            @keyframes shinkspan {
+                50%{
+                    font-size: 8em;
+                    opacity: 1;
+                }
+            }
+            
+        }
+        @keyframes shink { 
+            50%{
+                width: 75vw;
+                height: calc(75vw / 2); 
+            }
+        }
+        .show{
+            display: block;
         }
     }
 }

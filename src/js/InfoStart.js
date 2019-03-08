@@ -1,11 +1,14 @@
-class StartGame{
+class InfoStart{
+    // 用于控制首页启动页面
     clickStart(){
+        
         console.log(666) 
         let start = document.querySelector(".startbtn")
         let that = this 
         start.addEventListener('click',()=>{
             history.pushState({from:"index", to: "start"}, null, "?start")
             that.showWindow("start")  
+            new ModelControl(3, ".model").run()
         })
         window.addEventListener("popstate", function(e){
             if(e.state){
@@ -52,4 +55,3 @@ class StartGame{
     }
 }
 
-new StartGame().run()

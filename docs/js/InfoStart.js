@@ -6,15 +6,16 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var StartGame =
+var InfoStart =
 /*#__PURE__*/
 function () {
-  function StartGame() {
-    _classCallCheck(this, StartGame);
+  function InfoStart() {
+    _classCallCheck(this, InfoStart);
   }
 
-  _createClass(StartGame, [{
+  _createClass(InfoStart, [{
     key: "clickStart",
+    // 用于控制首页启动页面
     value: function clickStart() {
       console.log(666);
       var start = document.querySelector(".startbtn");
@@ -25,6 +26,7 @@ function () {
           to: "start"
         }, null, "?start");
         that.showWindow("start");
+        new ModelControl(3, ".model").run();
       });
       window.addEventListener("popstate", function (e) {
         if (e.state) {
@@ -82,7 +84,5 @@ function () {
     }
   }]);
 
-  return StartGame;
+  return InfoStart;
 }();
-
-new StartGame().run();

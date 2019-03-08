@@ -8,10 +8,12 @@
       FastClick.attach(document.body);
     }, false);
   }
-
-  for (var i = 0; i < 10; i++) {
-    var renderStone = new renderli(2, ".ob-list"); // 渲染石头
-
-    renderStone.run();
-  }
 })();
+
+for (var i = 0; i < 10; i++) {
+  var renderStone = new Renderli(2, ".ob-list"); // 渲染石头
+
+  renderStone.run();
+}
+
+new InfoStart().run();
