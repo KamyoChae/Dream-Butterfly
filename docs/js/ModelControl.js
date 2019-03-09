@@ -234,17 +234,17 @@ function () {
       if (rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.height + rect1.y > rect2.y) {
         // console.log("碰撞")
         ele.style.display = "none";
+        var len = this.live;
 
-        if (this.live >= 0) {
+        if (this.live > 0) {
           console.log("新的石头");
           var liveDom = Array.from(document.querySelectorAll('.live')); // console.log(Array.from(liveDom))
           // console.log(this.live)
 
-          var len = liveDom.length;
           console.log(liveDom[len - 1]);
           liveDom[len - 1].classList.add('livelose');
           this.live--;
-        } else if (this.live < 0) {
+        } else {
           this.dowFlag = false;
         }
       }

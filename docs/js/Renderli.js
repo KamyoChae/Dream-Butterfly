@@ -37,8 +37,7 @@ function () {
 
         var index = Math.floor(Math.random() * nullDomArr.length); // 随机插入li位置
 
-        var id = new Date().getTime();
-        var newDom = "<div class=\"stone\" data-id=\"".concat(id, "\" style=\"background-image:url(./images/lib/").concat(name, ".jpg)\"></div> ");
+        var newDom = "<div class=\"stone\" style=\"background-image:url(./images/lib/".concat(name, ".jpg)\"></div> ");
         nullDomArr.splice(index, 0, newDom);
         stoneNum--;
       }

@@ -213,18 +213,19 @@ class ModelControl {
 
             // console.log("碰撞")
             ele.style.display="none" 
-            if (this.live >= 0  ) {
+            
+            let len = this.live
+            if (this.live > 0  ) {
                 console.log("新的石头")
                 let liveDom = Array.from(document.querySelectorAll('.live'))
 
                 // console.log(Array.from(liveDom))
                 // console.log(this.live)
-                let len = liveDom.length
                 console.log(liveDom[len - 1])
                 liveDom[len - 1].classList.add('livelose')
                 this.live--
 
-            } else if(this.live < 0){
+            } else {
 
                 this.dowFlag = false
             }
