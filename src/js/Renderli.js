@@ -18,7 +18,8 @@ class Renderli {
         while(stoneNum){
             let name = Math.ceil(Math.random()*13) // 随机生成图片
             let index = Math.floor(Math.random()*nullDomArr.length) // 随机插入li位置
-            let newDom = `<div class="stone" style="background-image:url(./images/lib/${name}.jpg)"></div> `
+            let id = new Date().getTime()
+            let newDom = `<div class="stone" data-id="${id}" style="background-image:url(./images/lib/${name}.jpg)"></div> `
             nullDomArr.splice(index, 0, newDom )
             stoneNum --
         }

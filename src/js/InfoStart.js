@@ -6,8 +6,10 @@ class InfoStart{
         let that = this 
         start.addEventListener('click',()=>{
             history.pushState({from:"index", to: "start"}, null, "?start")
-            that.showWindow("start")  
-            new ModelControl(3, ".model").run()
+            that.showWindow("start")
+            let model = new ModelControl(3, ".model")
+            model.startInit()
+            model.run() // 倒计时秒数 model框节点
         })
         window.addEventListener("popstate", function(e){
             if(e.state){

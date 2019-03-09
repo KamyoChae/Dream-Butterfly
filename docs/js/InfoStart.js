@@ -25,7 +25,9 @@ function () {
           to: "start"
         }, null, "?start");
         that.showWindow("start");
-        new ModelControl(3, ".model").run();
+        var model = new ModelControl(3, ".model");
+        model.startInit();
+        model.run(); // 倒计时秒数 model框节点
       });
       window.addEventListener("popstate", function (e) {
         if (e.state) {
