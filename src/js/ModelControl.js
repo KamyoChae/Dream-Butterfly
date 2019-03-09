@@ -21,6 +21,7 @@ class ModelControl {
         this.clientHeight = document.body.clientHeight
         this.dowFlag = true
         this.live = 3
+        this.speed = 0 // 蝴蝶移动速度
         
 
     }
@@ -55,6 +56,11 @@ class ModelControl {
         
         // 初始化每个li的高度用于渲染石头宽度
         this.liHeight = document.querySelector(".ob-list li").offsetHeight // 每个li 的高度 66  
+
+        // 初始化蝴蝶移动速度
+        this.speed = 0
+        // 给蝴蝶绑定函数
+        this.butfferMove()
 
 
     }
@@ -166,16 +172,22 @@ class ModelControl {
         }
     }
     butfferMove(){
-        window.addEventListener("deviceorientation",function(event){
-            console.log(event)  
+        let that = this
+        window.addEventListener("deviceorientation",(event)=>{
+
+            console.log(event) 
+            let show = document.querySelector(".aaaa") 
             dec = Math.floor(event.beta)
 
-                if( dec < 0){
-                    h.innerHTML = "往右边" + `上一个：${dec};;;`
-                }else if(dec > 0){
-                    h.innerHTML = "往左边" + `上一个：${dec};;;`
-                }else{
-                    h.innerHTML = "搞个锤子" + `上一个：${dec};;;`
+                if( dec < -10){
+                    show.innerHTML = "往右" + `${dec}`
+                    that.speed = -2
+                }else if(dec > 10){
+                    show.innerHTML = "往左" + `${dec}` 
+                    that.speed = -2
+                }else{ 
+                    show.innerHTML = "水平" + `${dec}`
+                    that.speed = 0
                 } 
         })
     }
@@ -187,6 +199,7 @@ class ModelControl {
         console.log(this.liHeight)
         let that = this
         let obList = document.querySelector(".ob-list") // 滚动画板  
+        let footer = document.querySelector(".footer")
         let dow = () => {
 
             if (this.dowFlag) {
@@ -194,6 +207,14 @@ class ModelControl {
                     let obOffsetTOp = obList.offsetTop // 滚动画板左上角与定位的父级左上角的距离 -667
                     let newSet = obOffsetTOp + 4
                     obList.style.top = newSet + "px" // 开始下滑 
+
+                    let newLeft = 0 + that.speed 
+                    if(newLeft < 0){
+                        newLeft = 0
+                    }else if(newLeft > (this.clientWidth - footer.offsetWidth)){
+                        newLeft = (this.clientWidth - footer.offsetWidth)
+                    }
+                    footer.style.left = newLeft + "px" // 蝴蝶左右动画
 
                     if (obOffsetTOp >= that.liHeight) {
                         // 表示滑动到了最下面 多一个 移除最下面的节点 重新添加一个节点
