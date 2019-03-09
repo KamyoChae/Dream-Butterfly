@@ -179,10 +179,10 @@ class ModelControl {
 
             if (dec < -10) {
                 show.innerHTML = "往左" + `${dec}`
-                that.speed += -4
+                that.speed -= 2
             } else if (dec > 10) {
                 show.innerHTML = "往右" + `${dec}`
-                that.speed += +4
+                that.speed += 2
             } else {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
@@ -192,11 +192,11 @@ class ModelControl {
         window.addEventListener("keydown", (e)=>{
             if(e.keyCode == 39){
                 console.log("往右")
-                that.speed += +4
+                that.speed += 5
                 console.log(that.speed)
             }else if(e.keyCode == 37){
                 console.log("往左")
-                that.speed += -4
+                that.speed -= 5
             }
 
         })

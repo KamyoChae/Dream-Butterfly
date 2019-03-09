@@ -201,10 +201,10 @@ function () {
 
         if (dec < -10) {
           show.innerHTML = "往左" + "".concat(dec);
-          that.speed += -4;
+          that.speed -= 2;
         } else if (dec > 10) {
           show.innerHTML = "往右" + "".concat(dec);
-          that.speed += +4;
+          that.speed += 2;
         } else {
           show.innerHTML = "水平" + "".concat(dec);
           that.speed = 0;
@@ -214,11 +214,11 @@ function () {
       window.addEventListener("keydown", function (e) {
         if (e.keyCode == 39) {
           console.log("往右");
-          that.speed += +4;
+          that.speed += 5;
           console.log(that.speed);
         } else if (e.keyCode == 37) {
           console.log("往左");
-          that.speed += -4;
+          that.speed -= 5;
         }
       });
     }
