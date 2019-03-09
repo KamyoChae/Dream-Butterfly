@@ -199,12 +199,12 @@ function () {
         var show = document.querySelector(".aaaa");
         var dec = Math.floor(event.gamma);
 
-        if (dec < -5) {
+        if (dec < -2) {
           show.innerHTML = "往左" + "".concat(dec);
-          that.speed = -8;
-        } else if (dec > 5) {
+          that.speed = -1;
+        } else if (dec > 2) {
           show.innerHTML = "往右" + "".concat(dec);
-          that.speed = 8;
+          that.speed = 1;
         } else {
           show.innerHTML = "水平" + "".concat(dec);
           that.speed = 0;
