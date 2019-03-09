@@ -201,10 +201,10 @@ function () {
 
         if (dec < -10) {
           show.innerHTML = "往左" + "".concat(dec);
-          that.speed -= 2;
+          that.speed = -2;
         } else if (dec > 10) {
           show.innerHTML = "往右" + "".concat(dec);
-          that.speed += 2;
+          that.speed = 2;
         } else {
           show.innerHTML = "水平" + "".concat(dec);
           that.speed = 0;
@@ -214,11 +214,11 @@ function () {
       window.addEventListener("keydown", function (e) {
         if (e.keyCode == 39) {
           console.log("往右");
-          that.speed += 5;
+          that.speed = 5;
           console.log(that.speed);
         } else if (e.keyCode == 37) {
           console.log("往左");
-          that.speed -= 5;
+          that.speed = -5;
         }
       });
     }
@@ -235,6 +235,7 @@ function () {
       var obList = document.querySelector(".ob-list"); // 滚动画板  
 
       var footer = document.querySelector(".footer");
+      var newLeft = 0;
 
       var dow = function dow() {
         if (_this4.dowFlag) {
@@ -244,7 +245,7 @@ function () {
             var newSet = obOffsetTOp + 4;
             obList.style.top = newSet + "px"; // 开始下滑 
 
-            var newLeft = 0 + that.speed;
+            newLeft += that.speed;
             console.log("newLeft ".concat(newLeft, " = 0 + that.speed ").concat(that.speed, " "));
 
             if (newLeft < 0) {
