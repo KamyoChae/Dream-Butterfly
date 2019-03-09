@@ -162,8 +162,7 @@ class ModelControl {
     }
     butflying(state) {
         // 控制蝴蝶飞翔动画
-        let butfly = document.querySelector('.butterfly span')
-        console.log(butfly)
+        let butfly = document.querySelector('.butterfly span') 
         if (state == "addfly") {
             butfly.classList.add('fly')
         }
@@ -174,21 +173,32 @@ class ModelControl {
     butfferMove() {
         let that = this
         window.addEventListener("deviceorientation", (event) => {
-
-            console.log(event)
+ 
             let show = document.querySelector(".aaaa")
             let dec = Math.floor(event.gamma)
 
             if (dec < -10) {
-                show.innerHTML = "往右" + `${dec}`
-                that.speed = 2
-            } else if (dec > 10) {
                 show.innerHTML = "往左" + `${dec}`
-                that.speed = -2
+                that.speed += -4
+            } else if (dec > 10) {
+                show.innerHTML = "往右" + `${dec}`
+                that.speed += +4
             } else {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
             }
+        })
+        console.log("绑定事件")
+        window.addEventListener("keydown", (e)=>{
+            if(e.keyCode == 39){
+                console.log("往右")
+                that.speed += +4
+                console.log(that.speed)
+            }else if(e.keyCode == 37){
+                console.log("往左")
+                that.speed += -4
+            }
+
         })
     }
 
@@ -209,6 +219,7 @@ class ModelControl {
                     obList.style.top = newSet + "px" // 开始下滑 
 
                     let newLeft = 0 + that.speed
+                    console.log(`newLeft ${newLeft} = 0 + that.speed ${that.speed} `)
                     if (newLeft < 0) {
                         newLeft = 0
                     } else if (newLeft > (this.clientWidth - footer.offsetWidth)) {
