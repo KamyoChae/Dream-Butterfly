@@ -179,10 +179,10 @@ class ModelControl {
 
             if (dec < -5) {
                 show.innerHTML = "往左" + `${dec}`
-                that.speed = -5
+                that.speed = -8
             } else if (dec > 5) {
                 show.innerHTML = "往右" + `${dec}`
-                that.speed = 5
+                that.speed = 8
             } else {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
@@ -192,11 +192,11 @@ class ModelControl {
         window.addEventListener("keydown", (e)=>{
             if(e.keyCode == 39){
                 console.log("往右")
-                that.speed = 5
+                that.speed = 2
                 console.log(that.speed)
             }else if(e.keyCode == 37){
                 console.log("往左")
-                that.speed = -5
+                that.speed = -2
             }
 
         })
@@ -210,7 +210,9 @@ class ModelControl {
         let that = this
         let obList = document.querySelector(".ob-list") // 滚动画板  
         let footer = document.querySelector(".footer")
-        let newLeft = 0
+        let distance = this.clientWidth/20
+        let newLeft = distance
+
         let dow = () => {
 
             if (this.dowFlag) {
@@ -221,10 +223,10 @@ class ModelControl {
 
                     newLeft += that.speed
                     console.log(`newLeft ${newLeft} = 0 + that.speed ${that.speed} `)
-                    if (newLeft < 0) {
-                        newLeft = 0
-                    } else if (newLeft > (this.clientWidth - footer.offsetWidth)) {
-                        newLeft = (this.clientWidth - footer.offsetWidth)
+                    if (newLeft < distance) {
+                        newLeft = distance
+                    } else if (newLeft > (this.clientWidth - footer.offsetWidth - distance)) {
+                        newLeft = (this.clientWidth - footer.offsetWidth - distance)
                     }
                     footer.style.left = newLeft + "px" // 蝴蝶左右动画
 

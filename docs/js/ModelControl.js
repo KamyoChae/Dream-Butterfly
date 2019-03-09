@@ -199,12 +199,12 @@ function () {
         var show = document.querySelector(".aaaa");
         var dec = Math.floor(event.gamma);
 
-        if (dec < -10) {
+        if (dec < -5) {
           show.innerHTML = "往左" + "".concat(dec);
-          that.speed = -2;
-        } else if (dec > 10) {
+          that.speed = -8;
+        } else if (dec > 5) {
           show.innerHTML = "往右" + "".concat(dec);
-          that.speed = 2;
+          that.speed = 8;
         } else {
           show.innerHTML = "水平" + "".concat(dec);
           that.speed = 0;
@@ -214,11 +214,11 @@ function () {
       window.addEventListener("keydown", function (e) {
         if (e.keyCode == 39) {
           console.log("往右");
-          that.speed = 5;
+          that.speed = 2;
           console.log(that.speed);
         } else if (e.keyCode == 37) {
           console.log("往左");
-          that.speed = -5;
+          that.speed = -2;
         }
       });
     }
@@ -235,7 +235,8 @@ function () {
       var obList = document.querySelector(".ob-list"); // 滚动画板  
 
       var footer = document.querySelector(".footer");
-      var newLeft = 0;
+      var distance = this.clientWidth / 20;
+      var newLeft = distance;
 
       var dow = function dow() {
         if (_this4.dowFlag) {
@@ -248,10 +249,10 @@ function () {
             newLeft += that.speed;
             console.log("newLeft ".concat(newLeft, " = 0 + that.speed ").concat(that.speed, " "));
 
-            if (newLeft < 0) {
-              newLeft = 0;
-            } else if (newLeft > _this4.clientWidth - footer.offsetWidth) {
-              newLeft = _this4.clientWidth - footer.offsetWidth;
+            if (newLeft < distance) {
+              newLeft = distance;
+            } else if (newLeft > _this4.clientWidth - footer.offsetWidth - distance) {
+              newLeft = _this4.clientWidth - footer.offsetWidth - distance;
             }
 
             footer.style.left = newLeft + "px"; // 蝴蝶左右动画

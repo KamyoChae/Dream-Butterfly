@@ -191,22 +191,23 @@
         .footer{
             // box-sizing: border-box;
             position: absolute;
-            bottom: 0;
+            bottom: 10vh; 
             // width: 100%;
             // height: 10vh; 
             // z-index: 999;
-            // background: #f5f;
-                width: @rectBf;
-                height: @rectBf; 
+            left: 5vw;
+            background: #f5f;
+            width: 4vw;
+            height: 4vw; 
             .butterfly{  
                 position: relative;
-                width: @rectBf;
-                height: @rectBf; 
-                transform: perspective(600px);
+                width: 14vw;
+                height: 14vw; 
+                transform:   translate(-35%, -35%);
                 span{
                     position: absolute;
                     width: 100%;
-                    height: 100%;
+                    height: 100%; 
                     background-image: url(../images/lib/u2.png) ;
                     @background();
                 }
