@@ -199,7 +199,7 @@ function () {
       window.addEventListener("deviceorientation", function (event) {
         console.log(event);
         var show = document.querySelector(".aaaa");
-        dec = Math.floor(event.beta);
+        var dec = Math.floor(event.beta);
 
         if (dec < -10) {
           show.innerHTML = "往右" + "".concat(dec);

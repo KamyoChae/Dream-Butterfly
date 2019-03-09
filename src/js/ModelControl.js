@@ -22,7 +22,7 @@ class ModelControl {
         this.dowFlag = true
         this.live = 3
         this.speed = 0 // 蝴蝶移动速度
-        
+
 
     }
     run() {
@@ -36,13 +36,13 @@ class ModelControl {
         // 初始化生命
         this.live = 3
         let liveArr = Array.from(document.querySelectorAll(".live"))
-        liveArr.forEach((ele)=>{
+        liveArr.forEach((ele) => {
             ele.setAttribute("class", "live")
         })
 
         // 初始化得分
         this.numDom.innerHTML = `0 <div class="seconds">0.00 秒</div>`
-        
+
         // 初始化障碍石头
         let obbox = document.querySelector('.obstacle')
         obbox.innerHTML = ""
@@ -53,7 +53,7 @@ class ModelControl {
             let renderStone = new Renderli(2, ".ob-list") // 渲染石头
             renderStone.run()
         }
-        
+
         // 初始化每个li的高度用于渲染石头宽度
         this.liHeight = document.querySelector(".ob-list li").offsetHeight // 每个li 的高度 66  
 
@@ -171,24 +171,24 @@ class ModelControl {
             butfly.classList.remove('fly')
         }
     }
-    butfferMove(){
+    butfferMove() {
         let that = this
-        window.addEventListener("deviceorientation",(event)=>{
+        window.addEventListener("deviceorientation", (event) => {
 
-            console.log(event) 
-            let show = document.querySelector(".aaaa") 
-            dec = Math.floor(event.beta)
+            console.log(event)
+            let show = document.querySelector(".aaaa")
+            let dec = Math.floor(event.beta)
 
-                if( dec < -10){
-                    show.innerHTML = "往右" + `${dec}`
-                    that.speed = -2
-                }else if(dec > 10){
-                    show.innerHTML = "往左" + `${dec}` 
-                    that.speed = -2
-                }else{ 
-                    show.innerHTML = "水平" + `${dec}`
-                    that.speed = 0
-                } 
+            if (dec < -10) {
+                show.innerHTML = "往右" + `${dec}`
+                that.speed = -2
+            } else if (dec > 10) {
+                show.innerHTML = "往左" + `${dec}`
+                that.speed = -2
+            } else {
+                show.innerHTML = "水平" + `${dec}`
+                that.speed = 0
+            }
         })
     }
 
@@ -208,10 +208,10 @@ class ModelControl {
                     let newSet = obOffsetTOp + 4
                     obList.style.top = newSet + "px" // 开始下滑 
 
-                    let newLeft = 0 + that.speed 
-                    if(newLeft < 0){
+                    let newLeft = 0 + that.speed
+                    if (newLeft < 0) {
                         newLeft = 0
-                    }else if(newLeft > (this.clientWidth - footer.offsetWidth)){
+                    } else if (newLeft > (this.clientWidth - footer.offsetWidth)) {
                         newLeft = (this.clientWidth - footer.offsetWidth)
                     }
                     footer.style.left = newLeft + "px" // 蝴蝶左右动画
@@ -269,10 +269,10 @@ class ModelControl {
             rect1.height + rect1.y > rect2.y) {
 
             // console.log("碰撞")
-            ele.style.display="none" 
-            
+            ele.style.display = "none"
+
             let len = this.live
-            if (this.live > 0  ) {
+            if (this.live > 0) {
                 console.log("新的石头")
                 let liveDom = Array.from(document.querySelectorAll('.live'))
 
@@ -284,14 +284,14 @@ class ModelControl {
 
             } else {
 
-                this.dowFlag = false 
+                this.dowFlag = false
                 console.log("游戏结束")
                 // 游戏结束
-                new InfoStart().showWindow("error") 
+                new InfoStart().showWindow("error")
                 new ErrorCheck().run()
                 document.querySelector('.start').style.zIndex = "999"
             }
-           
+
         }
     }
     checked() {
@@ -318,8 +318,8 @@ class ModelControl {
          *      表示碰撞
          * 
          */
-        
-        newDom.forEach((ele) => { 
+
+        newDom.forEach((ele) => {
             that.collision(ele)
         })
     }
