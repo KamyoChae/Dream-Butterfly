@@ -187,6 +187,22 @@ function () {
       }
     }
   }, {
+    key: "butfferMove",
+    value: function butfferMove() {
+      window.addEventListener("deviceorientation", function (event) {
+        console.log(event);
+        dec = Math.floor(event.beta);
+
+        if (dec < 0) {
+          h.innerHTML = "往右边" + "\u4E0A\u4E00\u4E2A\uFF1A".concat(dec, ";;;");
+        } else if (dec > 0) {
+          h.innerHTML = "往左边" + "\u4E0A\u4E00\u4E2A\uFF1A".concat(dec, ";;;");
+        } else {
+          h.innerHTML = "搞个锤子" + "\u4E0A\u4E00\u4E2A\uFF1A".concat(dec, ";;;");
+        }
+      });
+    }
+  }, {
     key: "pullDown",
     value: function pullDown() {
       var _this4 = this;

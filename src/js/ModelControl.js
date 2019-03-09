@@ -165,6 +165,20 @@ class ModelControl {
             butfly.classList.remove('fly')
         }
     }
+    butfferMove(){
+        window.addEventListener("deviceorientation",function(event){
+            console.log(event)  
+            dec = Math.floor(event.beta)
+
+                if( dec < 0){
+                    h.innerHTML = "往右边" + `上一个：${dec};;;`
+                }else if(dec > 0){
+                    h.innerHTML = "往左边" + `上一个：${dec};;;`
+                }else{
+                    h.innerHTML = "搞个锤子" + `上一个：${dec};;;`
+                } 
+        })
+    }
 
     pullDown() {
         // 石头滚动动画
@@ -288,4 +302,5 @@ class ModelControl {
             that.collision(ele)
         })
     }
+
 }
