@@ -177,10 +177,10 @@ class ModelControl {
             let show = document.querySelector(".aaaa")
             let dec = Math.floor(event.gamma)
 
-            if (dec < -2) {
+            if (dec < -0) {
                 show.innerHTML = "往左" + `${dec}`
                 that.speed = -3
-            } else if (dec > 2) {
+            } else if (dec > 0) {
                 show.innerHTML = "往右" + `${dec}`
                 that.speed = 3
             } else {
