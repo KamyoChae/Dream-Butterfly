@@ -35,14 +35,23 @@ function () {
   _createClass(ModelControl, [{
     key: "run",
     value: function run() {
+      // 启动
       this.createInterval(this.num, this.dom);
       this.pauseClick();
     }
   }, {
     key: "startInit",
     value: function startInit() {
-      this.numDom.innerHTML = "0 <div class=\"seconds\">0.00 \u79D2</div>";
+      // 初始化游戏数据
+      // 初始化生命
       this.live = 3;
+      var liveArr = Array.from(document.querySelectorAll(".live"));
+      liveArr.forEach(function (ele) {
+        ele.setAttribute("class", "live");
+      }); // 初始化得分
+
+      this.numDom.innerHTML = "0 <div class=\"seconds\">0.00 \u79D2</div>"; // 初始化障碍石头
+
       var obbox = document.querySelector('.obstacle');
       obbox.innerHTML = "";
       var newUL = document.createElement('ul');
@@ -53,7 +62,8 @@ function () {
         var renderStone = new Renderli(2, ".ob-list"); // 渲染石头
 
         renderStone.run();
-      }
+      } // 初始化每个li的高度用于渲染石头宽度
+
 
       this.liHeight = document.querySelector(".ob-list li").offsetHeight; // 每个li 的高度 66  
     }
@@ -62,6 +72,7 @@ function () {
     value: function createInterval(num, dom) {
       var _this = this;
 
+      // 创建倒计时 及设定部分参数
       var count = num;
       clearInterval(timer);
       dom.innerHTML = "<span>".concat(count, "</span>");
@@ -92,6 +103,7 @@ function () {
     value: function computedTime() {
       var _this2 = this;
 
+      // 时间管理
       var u = this.u,
           strU = this.strU,
           seconds = this.seconds,
@@ -126,6 +138,7 @@ function () {
   }, {
     key: "cancleTimer",
     value: function cancleTimer() {
+      // 暂停 或者游戏结束清除时间计时
       clearInterval(this.scoreTimer);
       clearInterval(this.secTimer);
       window.cancelAnimationFrame(this.animateDown);
@@ -136,6 +149,7 @@ function () {
     value: function pauseClick() {
       var _this3 = this;
 
+      // 点击暂停 状态控制
       var that = this;
       this.pupl.addEventListener("click", function (e) {
         console.log(e.target);
@@ -177,6 +191,7 @@ function () {
     value: function pullDown() {
       var _this4 = this;
 
+      // 石头滚动动画
       this.butflying("addfly");
       cancelAnimationFrame(this.animateDown);
       console.log(this.liHeight);
@@ -217,6 +232,7 @@ function () {
   }, {
     key: "collision",
     value: function collision(ele, lastId) {
+      // 检测碰撞核心操作
       var butfLeft = document.querySelector(".footer");
       var rect1 = {};
       var rect2 = {};
@@ -246,12 +262,18 @@ function () {
           this.live--;
         } else {
           this.dowFlag = false;
+          console.log("游戏结束"); // 游戏结束
+
+          new InfoStart().showWindow("error");
+          new ErrorCheck().run();
+          document.querySelector('.start').style.zIndex = "999";
         }
       }
     }
   }, {
     key: "checked",
     value: function checked() {
+      // 检测碰撞
       // console.log(this.dowFlag)
       var that = this;
       var domList = Array.from(document.querySelectorAll(".stone")); // 含70个元素的dom数组

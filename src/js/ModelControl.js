@@ -25,12 +25,24 @@ class ModelControl {
 
     }
     run() {
+        // 启动
         this.createInterval(this.num, this.dom)
         this.pauseClick()
     }
     startInit() {
-        this.numDom.innerHTML = `0 <div class="seconds">0.00 秒</div>`
+        // 初始化游戏数据
+
+        // 初始化生命
         this.live = 3
+        let liveArr = Array.from(document.querySelectorAll(".live"))
+        liveArr.forEach((ele)=>{
+            ele.setAttribute("class", "live")
+        })
+
+        // 初始化得分
+        this.numDom.innerHTML = `0 <div class="seconds">0.00 秒</div>`
+        
+        // 初始化障碍石头
         let obbox = document.querySelector('.obstacle')
         obbox.innerHTML = ""
         let newUL = document.createElement('ul')
@@ -40,9 +52,14 @@ class ModelControl {
             let renderStone = new Renderli(2, ".ob-list") // 渲染石头
             renderStone.run()
         }
+        
+        // 初始化每个li的高度用于渲染石头宽度
         this.liHeight = document.querySelector(".ob-list li").offsetHeight // 每个li 的高度 66  
+
+
     }
     createInterval(num, dom) {
+        // 创建倒计时 及设定部分参数
         let count = num
         clearInterval(timer)
         dom.innerHTML = `<span>${count}</span>`
@@ -66,6 +83,7 @@ class ModelControl {
         }, 1000)
     }
     computedTime() {
+        // 时间管理
         let u = this.u,
             strU = this.strU,
             seconds = this.seconds,
@@ -107,12 +125,14 @@ class ModelControl {
     }
 
     cancleTimer() {
+        // 暂停 或者游戏结束清除时间计时
         clearInterval(this.scoreTimer)
         clearInterval(this.secTimer)
         window.cancelAnimationFrame(this.animateDown)
         this.butflying("removefly")
     }
     pauseClick() {
+        // 点击暂停 状态控制
         let that = this
         this.pupl.addEventListener("click", (e) => {
             console.log(e.target)
@@ -147,6 +167,7 @@ class ModelControl {
     }
 
     pullDown() {
+        // 石头滚动动画
         this.butflying("addfly")
         cancelAnimationFrame(this.animateDown)
         console.log(this.liHeight)
@@ -182,6 +203,7 @@ class ModelControl {
         dow()
     }
     collision(ele, lastId) {
+        // 检测碰撞核心操作
         let butfLeft = document.querySelector(".footer")
         let rect1 = {}
         let rect2 = {}
@@ -227,12 +249,18 @@ class ModelControl {
 
             } else {
 
-                this.dowFlag = false
+                this.dowFlag = false 
+                console.log("游戏结束")
+                // 游戏结束
+                new InfoStart().showWindow("error") 
+                new ErrorCheck().run()
+                document.querySelector('.start').style.zIndex = "999"
             }
            
         }
     }
     checked() {
+        // 检测碰撞
         // console.log(this.dowFlag)
         let that = this
         let domList = Array.from(document.querySelectorAll(".stone")) // 含70个元素的dom数组

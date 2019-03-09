@@ -9,6 +9,7 @@
     height: 100%;
 }  
 @rect : calc(100vw / 7);
+@rectBf : calc(100vw / 10);
 .wrapper{
     position: relative;
     width: 100vw;
@@ -195,12 +196,12 @@
             // height: 10vh; 
             // z-index: 999;
             // background: #f5f;
-                width: @rect;
-                height: @rect; 
+                width: @rectBf;
+                height: @rectBf; 
             .butterfly{  
                 position: relative;
-                width: @rect;
-                height: @rect; 
+                width: @rectBf;
+                height: @rectBf; 
                 transform: perspective(600px);
                 span{
                     position: absolute;
@@ -261,6 +262,54 @@
         }
         .show{
             display: block;
+        }
+    }
+}
+.wrapper{
+    .error{
+        z-index: -999;
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+        transform: translate(-50%, -80%);
+        width: 80vw;
+        height: 40vw;
+        background-image: url(../images/lib/overbox.png);
+        @background();
+        .title{ 
+            width: 30vw;
+            height: 10vw; 
+            line-height: 10vw;
+            background-image: url(../images/lib/over.png); 
+            @background();
+            margin:6vw auto; 
+        }
+        .btnbox{ 
+            height: 10vw; 
+            line-height: 10vw;
+            text-align: center;
+            div{
+                display: inline-block;
+                width:18vw;
+                height: 9vw;
+                background-image: url(../images/lib/overpower.png); 
+                @background();
+                margin: 0 2vw;
+                transition: all .3s;
+            }
+            .divActive{
+                width: 20vw;
+                height: 10vw;
+            }
+            .overpower{
+                background-image: url(../images/lib/overpower.png); 
+            }
+            .overstart{
+                background-image: url(../images/lib/overstart.png); 
+            }
+            .oversend{
+                background-image: url(../images/lib/oversend.png); 
+            }
         }
     }
 }
