@@ -179,10 +179,10 @@ class ModelControl {
 
             if (dec < -2) {
                 show.innerHTML = "往左" + `${dec}`
-                that.speed = -1
+                that.speed = -3
             } else if (dec > 2) {
                 show.innerHTML = "往右" + `${dec}`
-                that.speed = 1
+                that.speed = 3
             } else {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
