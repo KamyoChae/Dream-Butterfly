@@ -28,15 +28,16 @@ function () {
       var dom = "<div class=\"stone\"></div> ";
       var nullDomArr = [];
 
-      for (var i = 0; i <= 7 - stoneNum; i++) {
+      for (var i = 0; i < 7 - stoneNum; i++) {
         nullDomArr.push(dom);
       }
 
       while (stoneNum) {
         var name = Math.ceil(Math.random() * 13); // 随机生成图片
 
-        var index = Math.floor(Math.random() * nullDomArr.length); // 随机插入li位置
+        var index = Math.floor(Math.random() * 7); // 随机插入li位置
 
+        console.log(index);
         var newDom = "<div class=\"stone\" style=\"background-image:url(./images/lib/".concat(name, ".jpg)\"></div> ");
         nullDomArr.splice(index, 0, newDom);
         stoneNum--;
