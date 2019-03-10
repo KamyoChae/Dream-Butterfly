@@ -33,6 +33,7 @@ class ModelControl {
         this.pauseClick()
     }
     startInit() {
+        new oAudio().playGame() // 播放开始游戏音乐
         // 初始化游戏数据
         
         // 清除所有定时器
@@ -74,6 +75,7 @@ class ModelControl {
         document.querySelector('.yes').addEventListener("click",()=>{
             // 返回首页
             console.log("返回首页")
+            new oAudio().indexGame() // 播放首页音乐
         })
         document.querySelector('.no').addEventListener("click",()=>{
             // 继续游戏
@@ -331,6 +333,7 @@ class ModelControl {
             let len = this.live
             if (this.live > 0) {
                 console.log("新的石头")
+                new oAudio().hitGame() // 播放碰撞音乐
                 let liveDom = Array.from(document.querySelectorAll('.live'))
 
                 // console.log(Array.from(liveDom))
@@ -339,7 +342,7 @@ class ModelControl {
                 this.live--
 
             } else {
-
+                new oAudio().hitGame() // 播放碰撞音乐
                 this.dowFlag = false // 如果为false 游戏结束
                 console.log("游戏结束")
                 // 游戏结束 

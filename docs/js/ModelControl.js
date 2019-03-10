@@ -48,9 +48,11 @@ function () {
     value: function startInit() {
       var _this = this;
 
+      new oAudio().playGame(); // 播放开始游戏音乐
       // 初始化游戏数据
       // 清除所有定时器
       // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
+
       console.log(this.dowFlag); // 初始化生命
 
       this.live = 3;
@@ -86,6 +88,7 @@ function () {
       document.querySelector('.yes').addEventListener("click", function () {
         // 返回首页
         console.log("返回首页");
+        new oAudio().indexGame(); // 播放首页音乐
       });
       document.querySelector('.no').addEventListener("click", function () {
         // 继续游戏
@@ -352,12 +355,16 @@ function () {
 
         if (this.live > 0) {
           console.log("新的石头");
+          new oAudio().hitGame(); // 播放碰撞音乐
+
           var liveDom = Array.from(document.querySelectorAll('.live')); // console.log(Array.from(liveDom))
           // console.log(this.live) 
 
           liveDom[len - 1].classList.add('livelose');
           this.live--;
         } else {
+          new oAudio().hitGame(); // 播放碰撞音乐
+
           this.dowFlag = false; // 如果为false 游戏结束
 
           console.log("游戏结束"); // 游戏结束 

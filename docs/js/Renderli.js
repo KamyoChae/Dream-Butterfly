@@ -35,9 +35,8 @@ function () {
       while (stoneNum) {
         var name = Math.ceil(Math.random() * 13); // 随机生成图片
 
-        var index = Math.floor(Math.random() * 7); // 随机插入li位置
+        var index = Math.floor(Math.random() * 7); // 随机插入li位置 
 
-        console.log(index);
         var newDom = "<div class=\"stone\" style=\"background-image:url(./images/lib/".concat(name, ".jpg)\"></div> ");
         nullDomArr.splice(index, 0, newDom);
         stoneNum--;

@@ -52,6 +52,11 @@ gulp.task("js",function(){
     .pipe(gulp.dest(folder.dist+"js/")) // 输出代码到dist/js目录下面
 })
 
+gulp.task("audio",function(){
+    gulp.src(folder.src + "audio/*")       // 读取src/audio文件夹下面的所有文件 
+    .pipe(gulp.dest(folder.dist+"audio/")) // 输出代码到dist/audio目录下面
+})
+
 gulp.task("server",function(){
     connect.server({                // 链接服务器
         port:9999,                  // 设置服务器端口为9999
@@ -68,4 +73,4 @@ gulp.task("watch",function(){
     gulp.watch("src/images/*",["images"])
 })
 
-gulp.task("default", ["html", "images", "css", "server", "js", "watch"])
+gulp.task("default", ["html", "images", "css", "js", "audio", "server", "watch"])
