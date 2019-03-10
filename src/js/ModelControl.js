@@ -37,7 +37,7 @@ class ModelControl {
         
         // 清除所有定时器
         // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
-
+        console.log(this.dowFlag)
         // 初始化生命
         this.live = 3
         let liveArr = Array.from(document.querySelectorAll(".live"))
@@ -87,8 +87,7 @@ class ModelControl {
             this.dowFlag = true
             this.computedTime() // 继续计时
             this.pullDown() // 继续翻石头
-        })
-
+        }) 
 
     }
     createInterval(num, dom) {
@@ -176,7 +175,9 @@ class ModelControl {
             console.log(e.target)
             let state = that.pupl.classList.contains("play")
             if (this.wantClickPupl) {
+                console.log("你倒是暂停")
                 if (state) {
+                    console.log("暂停之后清除定时器")
                     that.cancleTimer()
                     that.pupl.classList.remove("play")
                 } else {
@@ -219,15 +220,11 @@ class ModelControl {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
             }
-        })
-        console.log("绑定事件")
+        }) 
         window.addEventListener("keydown", (e)=>{
-            if(e.keyCode == 39){
-                console.log("往右")
-                that.speed = 2
-                console.log(that.speed)
-            }else if(e.keyCode == 37){
-                console.log("往左")
+            if(e.keyCode == 39){ 
+                that.speed = 2 
+            }else if(e.keyCode == 37){ 
                 that.speed = -2
             }
 
@@ -242,7 +239,7 @@ class ModelControl {
         cancelAnimationFrame(this.animateDown) 
         let that = this
         let obList = document.querySelector(".ob-list") // 滚动画板  
-        let footer = document.querySelector(".footer")
+        let footer = document.querySelector(".footer") // 蝴蝶位置
 
         let distance = this.clientWidth/20
         let newLeft = distance // 石头偏移量
@@ -287,10 +284,10 @@ class ModelControl {
         dow()
     }
     checkBackIndex(){
-        let returnDom = this.returnDom.style.zIndex
-        console.log(returnDom)
+        let returnDom = this.returnDom.style.zIndex 
         if(returnDom == 999){
             // 游戏暂停
+            // that.cancleTimer()
             this.dowFlag = false
             this.pupl.classList.remove("play")
             // 暂停按钮不可用 样式改变 
@@ -346,7 +343,7 @@ class ModelControl {
                 this.dowFlag = false // 如果为false 游戏结束
                 console.log("游戏结束")
                 // 游戏结束 
-
+                this.wantClickPupl = false // 禁用暂停开始按钮
                 new InfoStart().showWindow("error")
                 new ErrorCheck().run()
                 document.querySelector('.start').style.zIndex = "999"

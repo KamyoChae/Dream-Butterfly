@@ -12,7 +12,7 @@ class Renderli {
         
         let dom = `<div class="stone"></div> `
         let nullDomArr = []
-        for(let i = 0; i< 7-stoneNum; i++){
+        for(let i = 0; i<= 7-stoneNum; i++){
             nullDomArr.push(dom)
         }
         while(stoneNum){

@@ -51,7 +51,8 @@ function () {
       // 初始化游戏数据
       // 清除所有定时器
       // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
-      // 初始化生命
+      console.log(this.dowFlag); // 初始化生命
+
       this.live = 3;
       var liveArr = Array.from(document.querySelectorAll(".live"));
       liveArr.forEach(function (ele) {
@@ -193,7 +194,10 @@ function () {
         var state = that.pupl.classList.contains("play");
 
         if (_this4.wantClickPupl) {
+          console.log("你倒是暂停");
+
           if (state) {
+            console.log("暂停之后清除定时器");
             that.cancleTimer();
             that.pupl.classList.remove("play");
           } else {
@@ -241,14 +245,10 @@ function () {
           that.speed = 0;
         }
       });
-      console.log("绑定事件");
       window.addEventListener("keydown", function (e) {
         if (e.keyCode == 39) {
-          console.log("往右");
           that.speed = 2;
-          console.log(that.speed);
         } else if (e.keyCode == 37) {
-          console.log("往左");
           that.speed = -2;
         }
       });
@@ -265,7 +265,8 @@ function () {
       var that = this;
       var obList = document.querySelector(".ob-list"); // 滚动画板  
 
-      var footer = document.querySelector(".footer");
+      var footer = document.querySelector(".footer"); // 蝴蝶位置
+
       var distance = this.clientWidth / 20;
       var newLeft = distance; // 石头偏移量
 
@@ -316,10 +317,10 @@ function () {
     key: "checkBackIndex",
     value: function checkBackIndex() {
       var returnDom = this.returnDom.style.zIndex;
-      console.log(returnDom);
 
       if (returnDom == 999) {
         // 游戏暂停
+        // that.cancleTimer()
         this.dowFlag = false;
         this.pupl.classList.remove("play"); // 暂停按钮不可用 样式改变 
 
@@ -360,6 +361,8 @@ function () {
           this.dowFlag = false; // 如果为false 游戏结束
 
           console.log("游戏结束"); // 游戏结束 
+
+          this.wantClickPupl = false; // 禁用暂停开始按钮
 
           new InfoStart().showWindow("error");
           new ErrorCheck().run();

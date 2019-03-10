@@ -28,7 +28,7 @@ function () {
       var dom = "<div class=\"stone\"></div> ";
       var nullDomArr = [];
 
-      for (var i = 0; i < 7 - stoneNum; i++) {
+      for (var i = 0; i <= 7 - stoneNum; i++) {
         nullDomArr.push(dom);
       }
 
