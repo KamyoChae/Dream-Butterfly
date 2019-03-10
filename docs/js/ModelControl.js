@@ -34,6 +34,8 @@ function () {
     this.speed = 0; // 蝴蝶移动速度
 
     this.returnDom = document.querySelector('.return'); // 返回状态框
+
+    this.markLeft = 0; // 用于标记暂停蝴蝶位置
   }
 
   _createClass(ModelControl, [{
@@ -83,29 +85,42 @@ function () {
 
       this.speed = 0; // 给蝴蝶绑定函数
 
-      this.butfferMove(); // 给返回模态框添加事件
+      this.butfferMove();
+      this.markLeft = 0; // 将蝴蝶移动到最左边
+      // 给返回模态框添加事件
 
       document.querySelector('.yes').addEventListener("click", function () {
         // 返回首页
         console.log("返回首页");
         new oAudio().indexGame(); // 播放首页音乐
+
+        new InfoStart().showWindow("index");
+        _this.returnDom.style.zIndex = "-999"; // 隐藏模态框 
       });
       document.querySelector('.no').addEventListener("click", function () {
         // 继续游戏
         console.log("继续游戏");
-        _this.returnDom.style.zIndex = "-999"; // 隐藏模态框
 
-        var pupl = _this.pupl;
-        pupl.classList.add('play');
-        _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+        if (_this.live >= 0) {
+          _this.returnDom.style.zIndex = "-999"; // 隐藏模态框
 
-        _this.dowFlag = true;
+          var pupl = _this.pupl;
+          pupl.classList.add('play');
+          _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
 
-        _this.computedTime(); // 继续计时
+          _this.dowFlag = true; // 由于下面也进行了计时操作，因此需要检测 当分数为0时，执行计时 不为0说明只是按了返回按钮。
+          // 只是按了返回按钮，就不做计时操作
 
+          if (_this.score != 0) {
+            console.log("计时");
 
-        _this.pullDown(); // 继续翻石头
+            _this.computedTime(); // 继续计时
 
+          }
+
+          _this.pullDown(); // 继续翻石头
+
+        }
       });
     }
   }, {
@@ -202,13 +217,15 @@ function () {
           if (state) {
             console.log("暂停之后清除定时器");
             that.cancleTimer();
+            _this4.markLeft = document.querySelector(".footer").offsetLeft;
             that.pupl.classList.remove("play");
           } else {
             that.computedTime();
             that.pupl.classList.add("play");
             console.log("开始动画");
 
-            _this4.pullDown();
+            _this4.pullDown("new"); // 表示读取上一次的位置
+
           }
         } else {
           console.log("游戏尚未开始");
@@ -258,7 +275,7 @@ function () {
     }
   }, {
     key: "pullDown",
-    value: function pullDown() {
+    value: function pullDown(str) {
       var _this5 = this;
 
       // 石头滚动动画
@@ -270,8 +287,14 @@ function () {
 
       var footer = document.querySelector(".footer"); // 蝴蝶位置
 
+      var markLeft = this.markLeft; // 标记上一次位置 
+
       var distance = this.clientWidth / 20;
       var newLeft = distance; // 石头偏移量
+
+      if (str === "new") {
+        newLeft = markLeft;
+      }
 
       var dow = function dow() {
         if (_this5.dowFlag) {

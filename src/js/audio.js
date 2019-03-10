@@ -29,13 +29,15 @@ class oAudio {
         music.addEventListener("click", () => {
             let flag = music.classList.contains("ischecked")
 
-            let audio = this.audio[0]
-            console.log(audio)
+
+            let audio = this.audio
             if (flag) {
-                audio.pause()
+                audio[0].pause()
+                audio[1].pause()
                 music.classList.remove("ischecked")
             } else {
-                audio.play()
+                audio[0].play()
+                audio[1].play()
                 music.classList.add("ischecked")
             }
         })

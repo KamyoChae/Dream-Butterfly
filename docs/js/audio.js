@@ -48,14 +48,15 @@ function () {
       var music = this.music;
       music.addEventListener("click", function () {
         var flag = music.classList.contains("ischecked");
-        var audio = _this.audio[0];
-        console.log(audio);
+        var audio = _this.audio;
 
         if (flag) {
-          audio.pause();
+          audio[0].pause();
+          audio[1].pause();
           music.classList.remove("ischecked");
         } else {
-          audio.play();
+          audio[0].play();
+          audio[1].play();
           music.classList.add("ischecked");
         }
       });

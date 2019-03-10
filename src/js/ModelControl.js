@@ -25,6 +25,7 @@ class ModelControl {
 
         this.returnDom = document.querySelector('.return') // 返回状态框
 
+        this.markLeft = 0 // 用于标记暂停蝴蝶位置
 
     }
     run() {
@@ -35,7 +36,7 @@ class ModelControl {
     startInit() {
         new oAudio().playGame() // 播放开始游戏音乐
         // 初始化游戏数据
-        
+
         // 清除所有定时器
         // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
         console.log(this.dowFlag)
@@ -69,27 +70,40 @@ class ModelControl {
         this.speed = 0
         // 给蝴蝶绑定函数
         this.butfferMove()
+        this.markLeft = 0 // 将蝴蝶移动到最左边
 
         // 给返回模态框添加事件
 
-        document.querySelector('.yes').addEventListener("click",()=>{
+        document.querySelector('.yes').addEventListener("click", () => {
             // 返回首页
             console.log("返回首页")
             new oAudio().indexGame() // 播放首页音乐
+            new InfoStart().showWindow("index")
+            this.returnDom.style.zIndex = "-999"  // 隐藏模态框 
         })
-        document.querySelector('.no').addEventListener("click",()=>{
+        document.querySelector('.no').addEventListener("click", () => {
             // 继续游戏
             console.log("继续游戏")
-            
-            this.returnDom.style.zIndex = "-999"  // 隐藏模态框
-            let pupl = this.pupl
-            pupl.classList.add('play')
-            this.wantClickPupl = true // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+            if (this.live >= 0) {
 
-            this.dowFlag = true
-            this.computedTime() // 继续计时
-            this.pullDown() // 继续翻石头
-        }) 
+                this.returnDom.style.zIndex = "-999"  // 隐藏模态框
+                let pupl = this.pupl
+                pupl.classList.add('play')
+                this.wantClickPupl = true // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+
+                this.dowFlag = true
+
+                // 由于下面也进行了计时操作，因此需要检测 当分数为0时，执行计时 不为0说明只是按了返回按钮。
+                // 只是按了返回按钮，就不做计时操作
+                if (this.score != 0) {
+                    console.log("计时")
+                    this.computedTime() // 继续计时
+                }
+
+                this.pullDown() // 继续翻石头
+
+            }
+        })
 
     }
     createInterval(num, dom) {
@@ -147,9 +161,9 @@ class ModelControl {
             dom.innerHTML = `${score}
             <div class="seconds">${timeSec}</div>`
             this.u = u,
-            this.strU = strU,
-            this.seconds = seconds,
-            this.timeSec = timeSec
+                this.strU = strU,
+                this.seconds = seconds,
+                this.timeSec = timeSec
         }, 10);
 
         this.secTimer = secTimer
@@ -167,8 +181,8 @@ class ModelControl {
         window.cancelAnimationFrame(this.animateDown)
         this.butflying("removefly")
 
-        
-         
+
+
     }
     pauseClick() {
         // 点击暂停 状态控制
@@ -181,12 +195,13 @@ class ModelControl {
                 if (state) {
                     console.log("暂停之后清除定时器")
                     that.cancleTimer()
+                    this.markLeft = document.querySelector(".footer").offsetLeft
                     that.pupl.classList.remove("play")
                 } else {
                     that.computedTime()
                     that.pupl.classList.add("play")
                     console.log("开始动画")
-                    this.pullDown()
+                    this.pullDown("new") // 表示读取上一次的位置
                 }
             } else {
                 console.log("游戏尚未开始")
@@ -197,7 +212,7 @@ class ModelControl {
     }
     butflying(state) {
         // 控制蝴蝶飞翔动画
-        let butfly = document.querySelector('.butterfly span') 
+        let butfly = document.querySelector('.butterfly span')
         if (state == "addfly") {
             butfly.classList.add('fly')
         }
@@ -208,7 +223,7 @@ class ModelControl {
     butfferMove() {
         let that = this
         window.addEventListener("deviceorientation", (event) => {
- 
+
             let show = document.querySelector(".direction")
             let dec = Math.floor(event.gamma)
 
@@ -222,29 +237,33 @@ class ModelControl {
                 show.innerHTML = "水平" + `${dec}`
                 that.speed = 0
             }
-        }) 
-        window.addEventListener("keydown", (e)=>{
-            if(e.keyCode == 39){ 
-                that.speed = 2 
-            }else if(e.keyCode == 37){ 
+        })
+        window.addEventListener("keydown", (e) => {
+            if (e.keyCode == 39) {
+                that.speed = 2
+            } else if (e.keyCode == 37) {
                 that.speed = -2
             }
 
         })
     }
 
-    pullDown() {
+    pullDown(str) {
         // 石头滚动动画
 
         // 初始化石头状态
         this.butflying("addfly")
-        cancelAnimationFrame(this.animateDown) 
+        cancelAnimationFrame(this.animateDown)
         let that = this
         let obList = document.querySelector(".ob-list") // 滚动画板  
         let footer = document.querySelector(".footer") // 蝴蝶位置
-
-        let distance = this.clientWidth/20
+        let markLeft = this.markLeft // 标记上一次位置 
+        let distance = this.clientWidth / 20
         let newLeft = distance // 石头偏移量
+
+        if (str === "new") {
+            newLeft = markLeft
+        }
 
         let dow = () => {
 
@@ -254,7 +273,7 @@ class ModelControl {
                     let newSet = obOffsetTOp + 4
                     obList.style.top = newSet + "px" // 开始下滑 
 
-                    newLeft += that.speed 
+                    newLeft += that.speed
                     if (newLeft < distance) {
                         newLeft = distance
                     } else if (newLeft > (this.clientWidth - footer.offsetWidth - distance)) {
@@ -274,7 +293,7 @@ class ModelControl {
                     }
 
                 }
-                
+
                 this.checkBackIndex()
                 this.checked()
                 this.animateDown = window.requestAnimationFrame(dow)
@@ -285,9 +304,9 @@ class ModelControl {
         // this.down = down
         dow()
     }
-    checkBackIndex(){
-        let returnDom = this.returnDom.style.zIndex 
-        if(returnDom == 999){
+    checkBackIndex() {
+        let returnDom = this.returnDom.style.zIndex
+        if (returnDom == 999) {
             // 游戏暂停
             // that.cancleTimer()
             this.dowFlag = false
