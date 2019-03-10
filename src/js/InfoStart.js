@@ -8,7 +8,7 @@ class InfoStart{
             history.pushState({from:"index", to: "start"}, null, "?start")
             that.showWindow("start")
             let model = new ModelControl(3, ".model")
-            model.startInit()
+            model.startInit() 
             model.run() // 倒计时秒数 model框节点
         })
         window.addEventListener("popstate", function(e){
@@ -17,8 +17,15 @@ class InfoStart{
                 let to = e.state.to 
                 console.log("from: " + from)
                 console.log("to: " + to)
-                history.pushState({from:to, to:from}, null,"?"+ from)
-                that.showWindow(from) 
+                if(from === "index"&& to==="start"){  
+                    console.log("我要返回主页面")
+                    let returnDom = document.querySelector('.return')
+                    returnDom.style.zIndex = "999"
+
+                }else{ 
+                    history.pushState({from:to, to:from}, null,"?"+ from)
+                    that.showWindow(from) 
+                }
             }  
         })
         

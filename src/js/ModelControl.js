@@ -12,7 +12,7 @@ class ModelControl {
         this.seconds = 0
         this.timeSec = ""
         this.score = 0
-        this.wantClickPupl = false
+        this.wantClickPupl = false // 通过这里进行动画的开关
 
         this.liHeight = ""
         this.animateDown = ""
@@ -23,6 +23,8 @@ class ModelControl {
         this.live = 3
         this.speed = 0 // 蝴蝶移动速度
 
+        this.returnDom = document.querySelector('.return') // 返回状态框
+
 
     }
     run() {
@@ -32,6 +34,9 @@ class ModelControl {
     }
     startInit() {
         // 初始化游戏数据
+        
+        // 清除所有定时器
+        // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
 
         // 初始化生命
         this.live = 3
@@ -42,6 +47,8 @@ class ModelControl {
 
         // 初始化得分
         this.numDom.innerHTML = `0 <div class="seconds">0.00 秒</div>`
+        clearInterval(this.secTimer)
+        clearInterval(this.scoreTimer)
 
         // 初始化障碍石头
         let obbox = document.querySelector('.obstacle')
@@ -61,6 +68,26 @@ class ModelControl {
         this.speed = 0
         // 给蝴蝶绑定函数
         this.butfferMove()
+
+        // 给返回模态框添加事件
+
+        document.querySelector('.yes').addEventListener("click",()=>{
+            // 返回首页
+            console.log("返回首页")
+        })
+        document.querySelector('.no').addEventListener("click",()=>{
+            // 继续游戏
+            console.log("继续游戏")
+            
+            this.returnDom.style.zIndex = "-999"  // 隐藏模态框
+            let pupl = this.pupl
+            pupl.classList.add('play')
+            this.wantClickPupl = true // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+
+            this.dowFlag = true
+            this.computedTime() // 继续计时
+            this.pullDown() // 继续翻石头
+        })
 
 
     }
@@ -110,7 +137,7 @@ class ModelControl {
                 strU = "0" + u
             } else {
                 strU = u
-                if (u > 100) {
+                if (u >= 100) {
                     u = 1
                     seconds++
                 }
@@ -119,9 +146,9 @@ class ModelControl {
             dom.innerHTML = `${score}
             <div class="seconds">${timeSec}</div>`
             this.u = u,
-                this.strU = strU,
-                this.seconds = seconds,
-                this.timeSec = timeSec
+            this.strU = strU,
+            this.seconds = seconds,
+            this.timeSec = timeSec
         }, 10);
 
         this.secTimer = secTimer
@@ -132,10 +159,15 @@ class ModelControl {
 
     cancleTimer() {
         // 暂停 或者游戏结束清除时间计时
+
+
         clearInterval(this.scoreTimer)
         clearInterval(this.secTimer)
         window.cancelAnimationFrame(this.animateDown)
         this.butflying("removefly")
+
+        
+         
     }
     pauseClick() {
         // 点击暂停 状态控制
@@ -174,7 +206,7 @@ class ModelControl {
         let that = this
         window.addEventListener("deviceorientation", (event) => {
  
-            let show = document.querySelector(".aaaa")
+            let show = document.querySelector(".direction")
             let dec = Math.floor(event.gamma)
 
             if (dec < -0) {
@@ -204,14 +236,16 @@ class ModelControl {
 
     pullDown() {
         // 石头滚动动画
+
+        // 初始化石头状态
         this.butflying("addfly")
-        cancelAnimationFrame(this.animateDown)
-        console.log(this.liHeight)
+        cancelAnimationFrame(this.animateDown) 
         let that = this
         let obList = document.querySelector(".ob-list") // 滚动画板  
         let footer = document.querySelector(".footer")
+
         let distance = this.clientWidth/20
-        let newLeft = distance
+        let newLeft = distance // 石头偏移量
 
         let dow = () => {
 
@@ -221,8 +255,7 @@ class ModelControl {
                     let newSet = obOffsetTOp + 4
                     obList.style.top = newSet + "px" // 开始下滑 
 
-                    newLeft += that.speed
-                    console.log(`newLeft ${newLeft} = 0 + that.speed ${that.speed} `)
+                    newLeft += that.speed 
                     if (newLeft < distance) {
                         newLeft = distance
                     } else if (newLeft > (this.clientWidth - footer.offsetWidth - distance)) {
@@ -242,6 +275,8 @@ class ModelControl {
                     }
 
                 }
+                
+                this.checkBackIndex()
                 this.checked()
                 this.animateDown = window.requestAnimationFrame(dow)
             } else {
@@ -250,6 +285,17 @@ class ModelControl {
         }
         // this.down = down
         dow()
+    }
+    checkBackIndex(){
+        let returnDom = this.returnDom.style.zIndex
+        console.log(returnDom)
+        if(returnDom == 999){
+            // 游戏暂停
+            this.dowFlag = false
+            this.pupl.classList.remove("play")
+            // 暂停按钮不可用 样式改变 
+            this.wantClickPupl = false
+        }
     }
     collision(ele, lastId) {
         // 检测碰撞核心操作
@@ -291,16 +337,16 @@ class ModelControl {
                 let liveDom = Array.from(document.querySelectorAll('.live'))
 
                 // console.log(Array.from(liveDom))
-                // console.log(this.live)
-                console.log(liveDom[len - 1])
+                // console.log(this.live) 
                 liveDom[len - 1].classList.add('livelose')
                 this.live--
 
             } else {
 
-                this.dowFlag = false
+                this.dowFlag = false // 如果为false 游戏结束
                 console.log("游戏结束")
-                // 游戏结束
+                // 游戏结束 
+
                 new InfoStart().showWindow("error")
                 new ErrorCheck().run()
                 document.querySelector('.start').style.zIndex = "999"

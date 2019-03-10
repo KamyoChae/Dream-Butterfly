@@ -23,7 +23,8 @@ function () {
     this.seconds = 0;
     this.timeSec = "";
     this.score = 0;
-    this.wantClickPupl = false;
+    this.wantClickPupl = false; // 通过这里进行动画的开关
+
     this.liHeight = "";
     this.animateDown = "";
     this.clientWidth = document.body.clientWidth;
@@ -31,6 +32,8 @@ function () {
     this.dowFlag = true;
     this.live = 3;
     this.speed = 0; // 蝴蝶移动速度
+
+    this.returnDom = document.querySelector('.return'); // 返回状态框
   }
 
   _createClass(ModelControl, [{
@@ -43,7 +46,11 @@ function () {
   }, {
     key: "startInit",
     value: function startInit() {
+      var _this = this;
+
       // 初始化游戏数据
+      // 清除所有定时器
+      // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
       // 初始化生命
       this.live = 3;
       var liveArr = Array.from(document.querySelectorAll(".live"));
@@ -51,7 +58,9 @@ function () {
         ele.setAttribute("class", "live");
       }); // 初始化得分
 
-      this.numDom.innerHTML = "0 <div class=\"seconds\">0.00 \u79D2</div>"; // 初始化障碍石头
+      this.numDom.innerHTML = "0 <div class=\"seconds\">0.00 \u79D2</div>";
+      clearInterval(this.secTimer);
+      clearInterval(this.scoreTimer); // 初始化障碍石头
 
       var obbox = document.querySelector('.obstacle');
       obbox.innerHTML = "";
@@ -71,12 +80,34 @@ function () {
 
       this.speed = 0; // 给蝴蝶绑定函数
 
-      this.butfferMove();
+      this.butfferMove(); // 给返回模态框添加事件
+
+      document.querySelector('.yes').addEventListener("click", function () {
+        // 返回首页
+        console.log("返回首页");
+      });
+      document.querySelector('.no').addEventListener("click", function () {
+        // 继续游戏
+        console.log("继续游戏");
+        _this.returnDom.style.zIndex = "-999"; // 隐藏模态框
+
+        var pupl = _this.pupl;
+        pupl.classList.add('play');
+        _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+
+        _this.dowFlag = true;
+
+        _this.computedTime(); // 继续计时
+
+
+        _this.pullDown(); // 继续翻石头
+
+      });
     }
   }, {
     key: "createInterval",
     value: function createInterval(num, dom) {
-      var _this = this;
+      var _this2 = this;
 
       // 创建倒计时 及设定部分参数
       var count = num;
@@ -91,13 +122,13 @@ function () {
           dom.innerHTML = "<span>".concat(count, "</span>");
         } else {
           // dom.innerHTML = "游戏开始"
-          _this.pullDown(); // 开始滑动
+          _this2.pullDown(); // 开始滑动
 
 
           dom.classList.remove("show");
-          var pupl = _this.pupl;
+          var pupl = _this2.pupl;
           pupl.classList.add('play');
-          _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+          _this2.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
 
           clearInterval(timer);
           that.computedTime();
@@ -107,7 +138,7 @@ function () {
   }, {
     key: "computedTime",
     value: function computedTime() {
-      var _this2 = this;
+      var _this3 = this;
 
       // 时间管理
       var u = this.u,
@@ -118,7 +149,7 @@ function () {
           dom = this.numDom;
       var scoreTimer = setInterval(function () {
         score = score + Math.ceil(5 * Math.random());
-        _this2.score = score;
+        _this3.score = score;
       }, 100);
       var secTimer = setInterval(function () {
         u++;
@@ -128,7 +159,7 @@ function () {
         } else {
           strU = u;
 
-          if (u > 100) {
+          if (u >= 100) {
             u = 1;
             seconds++;
           }
@@ -136,7 +167,7 @@ function () {
 
         timeSec = seconds + "." + strU + " 秒";
         dom.innerHTML = "".concat(score, "\n            <div class=\"seconds\">").concat(timeSec, "</div>");
-        _this2.u = u, _this2.strU = strU, _this2.seconds = seconds, _this2.timeSec = timeSec;
+        _this3.u = u, _this3.strU = strU, _this3.seconds = seconds, _this3.timeSec = timeSec;
       }, 10);
       this.secTimer = secTimer;
       this.scoreTimer = scoreTimer;
@@ -153,7 +184,7 @@ function () {
   }, {
     key: "pauseClick",
     value: function pauseClick() {
-      var _this3 = this;
+      var _this4 = this;
 
       // 点击暂停 状态控制
       var that = this;
@@ -161,7 +192,7 @@ function () {
         console.log(e.target);
         var state = that.pupl.classList.contains("play");
 
-        if (_this3.wantClickPupl) {
+        if (_this4.wantClickPupl) {
           if (state) {
             that.cancleTimer();
             that.pupl.classList.remove("play");
@@ -170,7 +201,7 @@ function () {
             that.pupl.classList.add("play");
             console.log("开始动画");
 
-            _this3.pullDown();
+            _this4.pullDown();
           }
         } else {
           console.log("游戏尚未开始");
@@ -196,13 +227,13 @@ function () {
     value: function butfferMove() {
       var that = this;
       window.addEventListener("deviceorientation", function (event) {
-        var show = document.querySelector(".aaaa");
+        var show = document.querySelector(".direction");
         var dec = Math.floor(event.gamma);
 
-        if (dec < -2) {
+        if (dec < -0) {
           show.innerHTML = "往左" + "".concat(dec);
           that.speed = -3;
-        } else if (dec > 2) {
+        } else if (dec > 0) {
           show.innerHTML = "往右" + "".concat(dec);
           that.speed = 3;
         } else {
@@ -225,21 +256,21 @@ function () {
   }, {
     key: "pullDown",
     value: function pullDown() {
-      var _this4 = this;
+      var _this5 = this;
 
       // 石头滚动动画
+      // 初始化石头状态
       this.butflying("addfly");
       cancelAnimationFrame(this.animateDown);
-      console.log(this.liHeight);
       var that = this;
       var obList = document.querySelector(".ob-list"); // 滚动画板  
 
       var footer = document.querySelector(".footer");
       var distance = this.clientWidth / 20;
-      var newLeft = distance;
+      var newLeft = distance; // 石头偏移量
 
       var dow = function dow() {
-        if (_this4.dowFlag) {
+        if (_this5.dowFlag) {
           if (obList) {
             var obOffsetTOp = obList.offsetTop; // 滚动画板左上角与定位的父级左上角的距离 -667
 
@@ -247,12 +278,11 @@ function () {
             obList.style.top = newSet + "px"; // 开始下滑 
 
             newLeft += that.speed;
-            console.log("newLeft ".concat(newLeft, " = 0 + that.speed ").concat(that.speed, " "));
 
             if (newLeft < distance) {
               newLeft = distance;
-            } else if (newLeft > _this4.clientWidth - footer.offsetWidth - distance) {
-              newLeft = _this4.clientWidth - footer.offsetWidth - distance;
+            } else if (newLeft > _this5.clientWidth - footer.offsetWidth - distance) {
+              newLeft = _this5.clientWidth - footer.offsetWidth - distance;
             }
 
             footer.style.left = newLeft + "px"; // 蝴蝶左右动画
@@ -269,16 +299,32 @@ function () {
             }
           }
 
-          _this4.checked();
+          _this5.checkBackIndex();
 
-          _this4.animateDown = window.requestAnimationFrame(dow);
+          _this5.checked();
+
+          _this5.animateDown = window.requestAnimationFrame(dow);
         } else {
-          _this4.cancleTimer();
+          _this5.cancleTimer();
         }
       }; // this.down = down
 
 
       dow();
+    }
+  }, {
+    key: "checkBackIndex",
+    value: function checkBackIndex() {
+      var returnDom = this.returnDom.style.zIndex;
+      console.log(returnDom);
+
+      if (returnDom == 999) {
+        // 游戏暂停
+        this.dowFlag = false;
+        this.pupl.classList.remove("play"); // 暂停按钮不可用 样式改变 
+
+        this.wantClickPupl = false;
+      }
     }
   }, {
     key: "collision",
@@ -306,14 +352,14 @@ function () {
         if (this.live > 0) {
           console.log("新的石头");
           var liveDom = Array.from(document.querySelectorAll('.live')); // console.log(Array.from(liveDom))
-          // console.log(this.live)
+          // console.log(this.live) 
 
-          console.log(liveDom[len - 1]);
           liveDom[len - 1].classList.add('livelose');
           this.live--;
         } else {
-          this.dowFlag = false;
-          console.log("游戏结束"); // 游戏结束
+          this.dowFlag = false; // 如果为false 游戏结束
+
+          console.log("游戏结束"); // 游戏结束 
 
           new InfoStart().showWindow("error");
           new ErrorCheck().run();

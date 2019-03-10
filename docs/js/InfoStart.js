@@ -35,11 +35,18 @@ function () {
           var to = e.state.to;
           console.log("from: " + from);
           console.log("to: " + to);
-          history.pushState({
-            from: to,
-            to: from
-          }, null, "?" + from);
-          that.showWindow(from);
+
+          if (from === "index" && to === "start") {
+            console.log("我要返回主页面");
+            var returnDom = document.querySelector('.return');
+            returnDom.style.zIndex = "999";
+          } else {
+            history.pushState({
+              from: to,
+              to: from
+            }, null, "?" + from);
+            that.showWindow(from);
+          }
         }
       });
     }
