@@ -52,8 +52,7 @@ function () {
 
       new oAudio().playGame(); // 播放开始游戏音乐
       // 初始化游戏数据
-      // 清除所有定时器
-      // this.dowFlag = false // 为false表示清除定时器 由于使用了动画帧 其他方法一律无效 
+      // 清除所有定时器 
 
       console.log(this.dowFlag); // 初始化生命
 
