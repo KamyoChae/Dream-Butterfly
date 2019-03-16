@@ -37,6 +37,16 @@ class ModelControl {
         new oAudio().playGame() // 播放开始游戏音乐
         // 初始化游戏数据
 
+        // 清除按钮
+        this.pupl.classList.remove("play")
+
+        
+        // 清除按钮绑定事件
+        this.pupl.removeEventListener("click", this.paseState)
+
+        // 开始按钮不能点击
+        this.wantClickPupl = false
+
         // 清除所有定时器 
         console.log(this.dowFlag)
         // 初始化生命
@@ -75,14 +85,14 @@ class ModelControl {
 
         document.querySelector('.yes').addEventListener("click", () => {
             // 返回首页
-            console.log("返回首页")
+            // console.log("返回首页")
             new oAudio().indexGame() // 播放首页音乐
             new InfoStart().showWindow("index")
             this.returnDom.style.zIndex = "-999"  // 隐藏模态框 
         })
         document.querySelector('.no').addEventListener("click", () => {
             // 继续游戏
-            console.log("继续游戏")
+            // console.log("继续游戏")
             if (this.live >= 0) {
 
                 this.returnDom.style.zIndex = "-999"  // 隐藏模态框
@@ -95,7 +105,7 @@ class ModelControl {
                 // 由于下面也进行了计时操作，因此需要检测 当分数为0时，执行计时 不为0说明只是按了返回按钮。
                 // 只是按了返回按钮，就不做计时操作
                 if (this.score != 0) {
-                    console.log("计时")
+                    // console.log("计时")
                     this.computedTime() // 继续计时
                 }
 
@@ -103,10 +113,13 @@ class ModelControl {
 
             }
         })
-
     }
     createInterval(num, dom) {
         // 创建倒计时 及设定部分参数
+        this.wantClickPupl = false // 不能点击开始按钮
+        
+        this.pupl.removeEventListener("click",this.paseState)
+        
         let count = num
         clearInterval(timer)
         dom.innerHTML = `<span>${count}</span>`
@@ -131,6 +144,8 @@ class ModelControl {
     }
     computedTime() {
         // 时间管理
+        clearInterval(this.secTimer)
+        clearInterval(this.scoreTimer)
         let u = this.u,
             strU = this.strU,
             seconds = this.seconds,
@@ -167,8 +182,6 @@ class ModelControl {
 
         this.secTimer = secTimer
         this.scoreTimer = scoreTimer
-
-
     }
 
     cancleTimer() {
@@ -183,31 +196,35 @@ class ModelControl {
 
 
     }
-    pauseClick() {
-        // 点击暂停 状态控制
-        let that = this
-        this.pupl.addEventListener("click", (e) => {
-            console.log(e.target)
-            let state = that.pupl.classList.contains("play")
+    paseState(e){ 
+        return (e)=>{
+            
+        console.log(`能否点击？：${this.wantClickPupl}`)
+            // console.log(e.target)
+            let state = this.pupl.classList.contains("play")
             if (this.wantClickPupl) {
-                console.log("你倒是暂停")
+                // console.log("你倒是暂停")
                 if (state) {
-                    console.log("暂停之后清除定时器")
-                    that.cancleTimer()
+                    // console.log("暂停之后清除定时器")
+                    this.cancleTimer()
                     this.markLeft = document.querySelector(".footer").offsetLeft
-                    that.pupl.classList.remove("play")
+                    this.pupl.classList.remove("play")
                 } else {
-                    that.computedTime()
-                    that.pupl.classList.add("play")
-                    console.log("开始动画")
+                    this.computedTime()
+                    this.pupl.classList.add("play")
+                    // console.log("开始动画")
                     this.pullDown("new") // 表示读取上一次的位置
                 }
             } else {
                 console.log("游戏尚未开始")
-            }
-
-        })
-
+            } 
+                
+        }
+    }
+    pauseClick() {
+        // 点击暂停 状态控制 
+        let paseState = this.paseState()
+        this.pupl.addEventListener("click", paseState)
     }
     butflying(state) {
         // 控制蝴蝶飞翔动画
@@ -243,7 +260,6 @@ class ModelControl {
             } else if (e.keyCode == 37) {
                 that.speed = -2
             }
-
         })
     }
 
@@ -365,6 +381,10 @@ class ModelControl {
                 console.log("游戏结束")
                 // 游戏结束 
                 this.wantClickPupl = false // 禁用暂停开始按钮
+                
+                // 清除按钮绑定事件
+                this.pupl.removeEventListener("click", this.paseState)
+
                 new InfoStart().showWindow("error")
                 new ErrorCheck().run()
                 document.querySelector('.start').style.zIndex = "999"

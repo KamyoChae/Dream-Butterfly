@@ -52,7 +52,13 @@ function () {
 
       new oAudio().playGame(); // 播放开始游戏音乐
       // 初始化游戏数据
-      // 清除所有定时器 
+      // 清除按钮
+
+      this.pupl.classList.remove("play"); // 清除按钮绑定事件
+
+      this.pupl.removeEventListener("click", this.paseState); // 开始按钮不能点击
+
+      this.wantClickPupl = false; // 清除所有定时器 
 
       console.log(this.dowFlag); // 初始化生命
 
@@ -90,7 +96,7 @@ function () {
 
       document.querySelector('.yes').addEventListener("click", function () {
         // 返回首页
-        console.log("返回首页");
+        // console.log("返回首页")
         new oAudio().indexGame(); // 播放首页音乐
 
         new InfoStart().showWindow("index");
@@ -98,8 +104,7 @@ function () {
       });
       document.querySelector('.no').addEventListener("click", function () {
         // 继续游戏
-        console.log("继续游戏");
-
+        // console.log("继续游戏")
         if (_this.live >= 0) {
           _this.returnDom.style.zIndex = "-999"; // 隐藏模态框
 
@@ -111,8 +116,7 @@ function () {
           // 只是按了返回按钮，就不做计时操作
 
           if (_this.score != 0) {
-            console.log("计时");
-
+            // console.log("计时")
             _this.computedTime(); // 继续计时
 
           }
@@ -128,6 +132,9 @@ function () {
       var _this2 = this;
 
       // 创建倒计时 及设定部分参数
+      this.wantClickPupl = false; // 不能点击开始按钮
+
+      this.pupl.removeEventListener("click", this.paseState);
       var count = num;
       clearInterval(timer);
       dom.innerHTML = "<span>".concat(count, "</span>");
@@ -159,6 +166,8 @@ function () {
       var _this3 = this;
 
       // 时间管理
+      clearInterval(this.secTimer);
+      clearInterval(this.scoreTimer);
       var u = this.u,
           strU = this.strU,
           seconds = this.seconds,
@@ -200,28 +209,29 @@ function () {
       this.butflying("removefly");
     }
   }, {
-    key: "pauseClick",
-    value: function pauseClick() {
+    key: "paseState",
+    value: function paseState(e) {
       var _this4 = this;
 
-      // 点击暂停 状态控制
-      var that = this;
-      this.pupl.addEventListener("click", function (e) {
-        console.log(e.target);
-        var state = that.pupl.classList.contains("play");
+      return function (e) {
+        console.log("\u80FD\u5426\u70B9\u51FB\uFF1F\uFF1A".concat(_this4.wantClickPupl)); // console.log(e.target)
+
+        var state = _this4.pupl.classList.contains("play");
 
         if (_this4.wantClickPupl) {
-          console.log("你倒是暂停");
-
+          // console.log("你倒是暂停")
           if (state) {
-            console.log("暂停之后清除定时器");
-            that.cancleTimer();
+            // console.log("暂停之后清除定时器")
+            _this4.cancleTimer();
+
             _this4.markLeft = document.querySelector(".footer").offsetLeft;
-            that.pupl.classList.remove("play");
+
+            _this4.pupl.classList.remove("play");
           } else {
-            that.computedTime();
-            that.pupl.classList.add("play");
-            console.log("开始动画");
+            _this4.computedTime();
+
+            _this4.pupl.classList.add("play"); // console.log("开始动画")
+
 
             _this4.pullDown("new"); // 表示读取上一次的位置
 
@@ -229,7 +239,14 @@ function () {
         } else {
           console.log("游戏尚未开始");
         }
-      });
+      };
+    }
+  }, {
+    key: "pauseClick",
+    value: function pauseClick() {
+      // 点击暂停 状态控制 
+      var paseState = this.paseState();
+      this.pupl.addEventListener("click", paseState);
     }
   }, {
     key: "butflying",
@@ -392,7 +409,9 @@ function () {
           console.log("游戏结束"); // 游戏结束 
 
           this.wantClickPupl = false; // 禁用暂停开始按钮
+          // 清除按钮绑定事件
 
+          this.pupl.removeEventListener("click", this.paseState);
           new InfoStart().showWindow("error");
           new ErrorCheck().run();
           document.querySelector('.start').style.zIndex = "999";
