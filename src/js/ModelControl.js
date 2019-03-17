@@ -116,6 +116,7 @@ class ModelControl {
             }
         })
     }
+    
     createInterval(num, dom) {
         // 创建倒计时 及设定部分参数
         this.wantClickPupl = false // 不能点击开始按钮
@@ -395,7 +396,11 @@ class ModelControl {
                 // 清除按钮绑定事件
                 this.pupl.removeEventListener("click", this.paseState)
 
-                new InfoStart().showWindow("error")
+                let num = this.score
+                console.log(num+ "传过来之前")
+                let info = new InfoStart()
+                info.bindSend(num)
+                info.showWindow("error") 
                 new ErrorCheck().run()
                 document.querySelector('.start').style.zIndex = "999"
             }

@@ -1,31 +1,31 @@
-class myCantract{
+class myCantract {
+   
+    /**
+     * n1wWjxZmTX2SJGbT9YrY84dK5xkTCbRLcqQ
+     * 865b06238d7dd0c9fbf491af766fe3ddddbff4bcc687fb5885835484a9be31e7
+     */
+    constructor() { }
 
-    // 合约地址 
-    // n233qBhuo3BgcyMaw49N4fN1ZZztcVtVVT9
-    // 交易哈希
-    // d5cb3c1df2e7b657161080e9d93a3940d9e0e2ded42ddfacf552e545df6ed871
-    constructor(){}
-    
-    init(){
-        // 初始化必须的
+    init() { 
         LocalContractStorage.set('items', [])
     }
 
-    getItems(){
-        // 公开接口
+    getItems() { 
         return LocalContractStorage.get('items')
     }
-    createItems(content){
-        const newItem = {
-            content,
-            publish_at:Date.now()/1000,
+    createItems(content) {
+        let newItem = {
+            content:content,
+            publish_at: Date.now() / 1000,
 
         }
-        const items = LocalContractStorage.get('items')
+        let items = LocalContractStorage.get('items') 
         items = items.push(newItem)
         LocalContractStorage.set('items', items)
-        return newItem 
-    } 
+        return newItem
+    }
 }
 
 module.exports = myCantract
+
+ 
