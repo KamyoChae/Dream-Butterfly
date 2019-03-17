@@ -231,6 +231,7 @@
             }
         }
         .model{ 
+            z-index: 30;
             display: none;
             position: absolute;
             width: 70vw;
@@ -242,8 +243,8 @@
             transform: translate(-50%, -80%);
             animation: shink 1s ease-in infinite;
             text-align: center;
-            vertical-align: middle; 
-            span{
+            vertical-align: middle;  
+            span{  
                 line-height: calc(70vw / 2);
                 font-size: 4em;
                 animation: shinkspan 1s infinite ease-in; 
@@ -255,7 +256,8 @@
                     font-size: 8em;
                     opacity: 1;
                 }
-            }
+            } 
+            
             
         }
         @keyframes shink { 
@@ -288,6 +290,7 @@
             @background();
             margin:6vw auto; 
         }
+
         .retitle{
             z-index: 999;
             width: 60vw;

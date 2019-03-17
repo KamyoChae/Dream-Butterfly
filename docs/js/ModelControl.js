@@ -50,6 +50,7 @@ function () {
     value: function startInit() {
       var _this = this;
 
+      // this.dowFlag = false // 如果为false 游戏结束 
       new oAudio().playGame(); // 播放开始游戏音乐
       // 初始化游戏数据
       // 清除按钮
@@ -97,6 +98,7 @@ function () {
       document.querySelector('.yes').addEventListener("click", function () {
         // 返回首页
         // console.log("返回首页")
+        location.reload();
         new oAudio().indexGame(); // 播放首页音乐
 
         new InfoStart().showWindow("index");
@@ -110,7 +112,7 @@ function () {
 
           var pupl = _this.pupl;
           pupl.classList.add('play');
-          _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
+          _this.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮  
 
           _this.dowFlag = true; // 由于下面也进行了计时操作，因此需要检测 当分数为0时，执行计时 不为0说明只是按了返回按钮。
           // 只是按了返回按钮，就不做计时操作
@@ -155,6 +157,7 @@ function () {
           pupl.classList.add('play');
           _this2.wantClickPupl = true; // 表示可点击 用于检测是否在倒计时阶段点击暂停/开始按钮 
 
+          console.log("改变了开关");
           clearInterval(timer);
           that.computedTime();
         }
@@ -166,6 +169,7 @@ function () {
       var _this3 = this;
 
       // 时间管理
+      console.log("第一次");
       clearInterval(this.secTimer);
       clearInterval(this.scoreTimer);
       var u = this.u,
@@ -219,19 +223,22 @@ function () {
         var state = _this4.pupl.classList.contains("play");
 
         if (_this4.wantClickPupl) {
-          // console.log("你倒是暂停")
           if (state) {
-            // console.log("暂停之后清除定时器")
+            console.log("暂停");
+
             _this4.cancleTimer();
 
             _this4.markLeft = document.querySelector(".footer").offsetLeft;
 
             _this4.pupl.classList.remove("play");
           } else {
+            _this4.cancleTimer();
+
             _this4.computedTime();
 
-            _this4.pupl.classList.add("play"); // console.log("开始动画")
+            _this4.pupl.classList.add("play");
 
+            console.log("开始动画");
 
             _this4.pullDown("new"); // 表示读取上一次的位置
 
@@ -247,6 +254,7 @@ function () {
       // 点击暂停 状态控制 
       var paseState = this.paseState();
       this.pupl.addEventListener("click", paseState);
+      console.log(this.pupl.removeEventListener("click", this.paseState));
     }
   }, {
     key: "butflying",
@@ -366,7 +374,9 @@ function () {
         this.dowFlag = false;
         this.pupl.classList.remove("play"); // 暂停按钮不可用 样式改变 
 
-        this.wantClickPupl = false;
+        this.wantClickPupl = false; // 清除按钮绑定事件
+
+        this.pupl.removeEventListener("click", this.paseState);
       }
     }
   }, {

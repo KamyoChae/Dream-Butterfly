@@ -8,6 +8,7 @@ class ErrorCheck extends InfoStart{
         dom.addEventListener("click", ()=>{
 
             this.showWindow("index")
+            location.reload()
         })
     }
 }

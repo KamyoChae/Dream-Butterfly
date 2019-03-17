@@ -42,6 +42,8 @@ function (_InfoStart) {
       var dom = document.querySelector('.overstart');
       dom.addEventListener("click", function () {
         _this.showWindow("index");
+
+        location.reload();
       });
     }
   }]);

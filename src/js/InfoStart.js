@@ -5,8 +5,11 @@ class InfoStart{
         let start = document.querySelector(".startbtn")
         let that = this 
         start.addEventListener('click',()=>{
+            
             history.pushState({from:"index", to: "start"}, null, "?start")
             that.showWindow("start")
+            
+            
             let model = new ModelControl(3, ".model")
             model.startInit() 
             model.run() // 倒计时秒数 model框节点
