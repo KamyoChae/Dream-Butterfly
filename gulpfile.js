@@ -47,8 +47,8 @@ gulp.task("js",function(){
     .pipe(babel({
         "presets":['@babel/env']
     }))                               // 使用babel
-    .pipe(uglify())                     // js代码压缩
-    .pipe(stripDebug())                 // 去除全部调试语句
+    // .pipe(uglify())                     // js代码压缩
+    // .pipe(stripDebug())                 // 去除全部调试语句
     .pipe(gulp.dest(folder.dist+"js/")) // 输出代码到dist/js目录下面
 })
 

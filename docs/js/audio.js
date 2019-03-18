@@ -1,1 +1,85 @@
-"use strict";function _classCallCheck(e,i){if(!(e instanceof i))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,i){for(var n=0;n<i.length;n++){var t=i[n];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}function _createClass(e,i,n){return i&&_defineProperties(e.prototype,i),n&&_defineProperties(e,n),e}var oAudio=function(){function e(){_classCallCheck(this,e),this.music=document.querySelector(".sound .checked"),this.audio=document.querySelectorAll("audio")}return _createClass(e,[{key:"run",value:function(){this.bindMusic()}},{key:"playGame",value:function(){this.createAudio("play",!0,0,".info")}},{key:"indexGame",value:function(){this.createAudio("index",!0,0,".info")}},{key:"hitGame",value:function(){this.createAudio("hit",!1,1,".hit")}},{key:"bindMusic",value:function(){var n=this,t=this.music;t.addEventListener("click",function(){var e=t.classList.contains("ischecked"),i=n.audio;e?(i[0].pause(),i[1].pause(),t.classList.remove("ischecked")):(i[0].play(),i[1].play(),t.classList.add("ischecked"))})}},{key:"createAudio",value:function(){for(var e=arguments.length,n=new Array(e),i=0;i<e;i++)n[i]=arguments[i];void 0,this.audio[n[2]].loop=n[1];var t=document.querySelectorAll(n[3]),a=["mp3","wav"];t.forEach(function(e,i){e.src="./audio/".concat(n[0],".").concat(a[i])}),this.audio[n[2]].load()}}]),e}();(new oAudio).run();
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var oAudio =
+/*#__PURE__*/
+function () {
+  function oAudio() {
+    _classCallCheck(this, oAudio);
+
+    this.music = document.querySelector(".sound .checked");
+    this.audio = document.querySelectorAll("audio");
+  }
+
+  _createClass(oAudio, [{
+    key: "run",
+    value: function run() {
+      this.bindMusic();
+    }
+  }, {
+    key: "playGame",
+    value: function playGame() {
+      // 开始游戏播放的音乐
+      this.createAudio("play", true, 0, ".info");
+    }
+  }, {
+    key: "indexGame",
+    value: function indexGame() {
+      // 进入首页播放的音乐
+      this.createAudio("index", true, 0, ".info");
+    }
+  }, {
+    key: "hitGame",
+    value: function hitGame() {
+      // 发生碰撞播放的音乐
+      this.createAudio("hit", false, 1, ".hit");
+    }
+  }, {
+    key: "bindMusic",
+    value: function bindMusic() {
+      var _this = this;
+
+      // 是否播放音乐
+      var music = this.music;
+      music.addEventListener("click", function () {
+        var flag = music.classList.contains("ischecked");
+        var audio = _this.audio;
+
+        if (flag) {
+          audio[0].pause();
+          audio[1].pause();
+          music.classList.remove("ischecked");
+        } else {
+          audio[0].play();
+          audio[1].play();
+          music.classList.add("ischecked");
+        }
+      });
+    }
+  }, {
+    key: "createAudio",
+    value: function createAudio() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      console.log(args);
+      this.audio[args[2]].loop = args[1];
+      var arr = document.querySelectorAll(args[3]);
+      var otype = ["mp3", "wav"];
+      arr.forEach(function (ele, index) {
+        ele.src = "./audio/".concat(args[0], ".").concat(otype[index]);
+      });
+      this.audio[args[2]].load();
+    }
+  }]);
+
+  return oAudio;
+}();
+
+new oAudio().run();

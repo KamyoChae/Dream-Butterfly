@@ -1,8 +1,8 @@
 class myCantract {
    
     /**
-     * n1wWjxZmTX2SJGbT9YrY84dK5xkTCbRLcqQ
-     * 865b06238d7dd0c9fbf491af766fe3ddddbff4bcc687fb5885835484a9be31e7
+     * n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL
+     * d84c50660ef88206cf5054407326c541d49cf5169e4f000c535a9edfb74a8d39
      */
     constructor() { }
 
@@ -20,7 +20,7 @@ class myCantract {
 
         }
         let items = LocalContractStorage.get('items') 
-        items = items.push(newItem)
+        items = [...items, newItem]
         LocalContractStorage.set('items', items)
         return newItem
     }

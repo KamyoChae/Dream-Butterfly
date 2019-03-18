@@ -1,1 +1,13 @@
-"use strict";!function(){window.zepto;"addEventListener"in document&&document.addEventListener("DOMContentLoaded",function(){FastClick.attach(document.body)},!1)}(),(new InfoStart).run();
+"use strict";
+
+(function () {
+  var $ = window.zepto;
+
+  if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function () {
+      FastClick.attach(document.body);
+    }, false);
+  }
+})();
+
+new InfoStart().run();

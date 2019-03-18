@@ -44,7 +44,7 @@ class InfoStart{
             history.pushState({from:"index", to: "world"}, null, "?world")
             that.showWindow("world")  
             console.log("查询链上")
-            Nasa.query('n1wWjxZmTX2SJGbT9YrY84dK5xkTCbRLcqQ', 'getItems', [])
+            Nasa.query('n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL', 'getItems', [])
                 .then((res)=>{
                     console.log(res)
                     const list = res.execResult 
@@ -78,7 +78,7 @@ class InfoStart{
     }
     bindSend(num){
         // 绑定点击 
-        const addr = 'n1wWjxZmTX2SJGbT9YrY84dK5xkTCbRLcqQ'
+        const addr = 'n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL'
         let sendBtn = document.querySelector('.oversend')
         sendBtn.addEventListener("click", ()=>{
             // 点击按钮
