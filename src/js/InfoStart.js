@@ -74,7 +74,7 @@ class InfoStart {
             index: document.querySelector('.index'),
             start: document.querySelector('.start'),
             error: document.querySelector('.error'),
-            help: document.querySelector('.help'),
+            tips: document.querySelector('.tips'),
             world: document.querySelector('.world'),
         }
         for (let prop in obj) {
@@ -126,6 +126,7 @@ class InfoStart {
             }, (error) => {
                 console.log("查询地址失败")
                 alert("获取星云钱包地址受限，请在chrome上体验Dapp！")
+                this.showWindow("tips")
             })
             
         })
