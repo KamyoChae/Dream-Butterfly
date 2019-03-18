@@ -1,8 +1,8 @@
 class myCantract {
    
     /**
-     * n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL
-     * d84c50660ef88206cf5054407326c541d49cf5169e4f000c535a9edfb74a8d39
+     * n1pifG4soXjrRBFjJNWbEpqHQ8DzG8tNunc
+     * 10517a2e972aa24516047107f5db999e80c749611cc5374f944105fe23149b35 
      */
     constructor() { }
 
@@ -13,9 +13,10 @@ class myCantract {
     getItems() { 
         return LocalContractStorage.get('items')
     }
-    createItems(content) {
+    createItems(score,user) {
         let newItem = {
-            content:content,
+            score,
+            user,
             publish_at: Date.now() / 1000,
 
         }

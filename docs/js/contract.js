@@ -18,8 +18,8 @@ var myCantract =
 /*#__PURE__*/
 function () {
   /**
-   * n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL
-   * d84c50660ef88206cf5054407326c541d49cf5169e4f000c535a9edfb74a8d39
+   * n1pifG4soXjrRBFjJNWbEpqHQ8DzG8tNunc
+   * 10517a2e972aa24516047107f5db999e80c749611cc5374f944105fe23149b35 
    */
   function myCantract() {
     _classCallCheck(this, myCantract);
@@ -37,9 +37,10 @@ function () {
     }
   }, {
     key: "createItems",
-    value: function createItems(content) {
+    value: function createItems(score, user) {
       var newItem = {
-        content: content,
+        score: score,
+        user: user,
         publish_at: Date.now() / 1000
       };
       var items = LocalContractStorage.get('items');

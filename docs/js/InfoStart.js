@@ -64,11 +64,19 @@ function () {
         }, null, "?world");
         that.showWindow("world");
         console.log("查询链上");
-        Nasa.query('n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL', 'getItems', []).then(function (res) {
-          console.log(res);
+        Nasa.query('n1pifG4soXjrRBFjJNWbEpqHQ8DzG8tNunc', 'getItems', []).then(function (res) {
           var list = res.execResult; // 将list渲染到页面
 
-          console.log(list);
+          var str = "";
+          list.forEach(function (el, index) {
+            var s = "";
+
+            if (typeof el.user === "string") {
+              s = "<li>\n                                    <span class=\"world-index\">".concat(index + 1, "</span>\n                                    <span class=\"world-addr\">").concat(el.user, "</span>\n                                    <span class=\"world-score\"><i class=\"red\">").concat(el.score, "</i> \u5206</span>\n                                </li>");
+              str += s;
+            }
+          });
+          document.querySelector('.list-world').innerHTML = str;
         }, function (error) {
           console.log("error");
         });
@@ -98,32 +106,39 @@ function () {
     key: "bindSend",
     value: function bindSend(num) {
       // 绑定点击 
-      var addr = 'n1h1iYxMr5wFTi7coWx4wHYWQpqqgeqrnrL';
+      var addr = 'n1pifG4soXjrRBFjJNWbEpqHQ8DzG8tNunc';
       var sendBtn = document.querySelector('.oversend');
       sendBtn.addEventListener("click", function () {
         // 点击按钮
         // 调用线上合约接口 
         console.log(num + "传过来之后");
-        Nasa.call(addr, 'createItems', [num]).then(function (res) {
-          var payId = res.payId;
-          console.log(res); // 返回交易流水号id
-          // 通过另一个接口检查是否已经完成交易
+        Nasa.user.getAddr().then(function (re) {
+          console.log(re);
+          var user = re;
+          Nasa.call(addr, 'createItems', [num, user]).then(function (res) {
+            var payId = res.payId;
+            console.log(res); // 返回交易流水号id
+            // 通过另一个接口检查是否已经完成交易
 
-          return Nasa.getTxResult(payId);
+            return Nasa.getTxResult(payId);
+          }, function (error) {
+            console.log("查询流水过程中出了点问题");
+          }).then(function (res) {
+            console.log(res); // 完成交易之后 将先前的数据写入页面
+
+            if (res.status === 1) {
+              var exec = res.execResult; // 开始渲染页面
+
+              var score = exec.content; // 分数
+
+              var time = exec.publish_at; // 时间 
+
+              var _user = res.from; // 用户
+            }
+          });
         }, function (error) {
-          console.log("查询流水过程中出了点问题");
-        }).then(function (res) {
-          console.log(res); // 完成交易之后 将先前的数据写入页面
-
-          if (res.status === 1) {
-            var exec = res.execResult; // 开始渲染页面
-
-            var score = exec.content; // 分数
-
-            var time = exec.publish_at; // 时间 
-
-            var user = res.from; // 用户
-          }
+          console.log("查询地址失败");
+          alert("获取星云钱包地址受限，请在chrome上体验Dapp！");
         });
       });
     }

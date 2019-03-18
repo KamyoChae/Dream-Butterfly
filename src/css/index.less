@@ -336,8 +336,46 @@
 .wrapper{
     .world{
         z-index: -99;
+        // z-index: 999;
         @sizeinit();
         position: absolute;
         background: #f5f5f5;
+        .list-world{
+            width: 100%;
+            height: 100%; 
+            box-sizing: border-box;
+            padding: 5vh 10vw;
+            background-image: url(../images/lib/bg2.JPG);
+            background-position: 100% 100%;
+            background-size: 60%;
+            background-repeat: no-repeat;
+            li{
+                display: flex;
+                line-height: 1.5em;
+                border-bottom: 1px solid rgb(138, 133, 133); 
+                padding: 1em 0;
+                .world-index{
+                    text-align: center; 
+                    width: 1.5em;  
+                    background: #ec2424;
+                    color: #f5f5f5;
+                    border-radius: 50%;
+                }
+                .world-addr{  
+                    width: 65%;  
+                    overflow: hidden;
+                    text-overflow: ellipsis; 
+                    padding: 0 1em;
+                }
+                .world-score{  
+                    white-space: nowrap;  
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    .red{
+                        color:  #ec2424;
+                    }
+                }
+            }
+        }
     }
 }
