@@ -27,6 +27,8 @@ class InfoStart {
                 if (from === "index" && to === "start") {
                     console.log("我要返回主页面")
                     let returnDom = document.querySelector('.return')
+
+                    document.querySelector('.tips').style.zIndex = -99
                     returnDom.style.zIndex = "999"
 
                 } else {
