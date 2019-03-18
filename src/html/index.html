@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="./css/reset.css">
     <script src="./js/fastclick.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nasa.js@0.2.1/dist/nasa.min.js"></script>
+
+    <script>
+        window.onload = function(){
+            document.querySelector('.loading').style.zIndex = "-99"
+        }
+    </script>
 </head>
 
 <body>
@@ -110,6 +116,14 @@
                 <span>数组加载中...</span> 
                  
             </ul>
+        </div>
+
+        <div class="loading">
+            <div class="box"> 
+                <span></span>
+            </div>
+            
+            页面加载中...
         </div>
     </div>  
     <script src="./js/audio.js"></script>  
