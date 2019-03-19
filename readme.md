@@ -5,6 +5,18 @@ pc端通过左右箭头移动蝴蝶方向
 
 每局只有四条命。开始阶段随机发生意外的无形碰撞，所有小心心用完即为游戏结束。
 
+# 在PC可以直接F12拉小一下屏幕，按左右方向键移动目标
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/images/demoIndex.JPG)
+
+# 唤起星云钱包
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/images/brock.JPG)
+
+# 移动端界面
+
+![](https://github.com/KamyoChae/Dream-Butterfly/blob/master/src/images/mbrock.JPG)
+
 
 
 【2019-03-16】
